@@ -1,0 +1,29 @@
+[
+  {
+    "title": "Do the thing",
+    "notes": [
+      "First",
+      "Second"
+    ],
+    "tags": [
+      "Urgent"
+    ],
+    "date": "2025-05-01",
+    "time": "12:25:31 AM",
+    "id": 1,
+    "status": "live"
+  },
+  {
+    "title": "try",
+    "notes": [
+      "Helllo bro"
+    ],
+    "tags": [
+      "super"
+    ],
+    "date": "2025-05-02",
+    "time": "12:46:53 PM",
+    "id": 2,
+    "status": "deleted"
+  }
+]
