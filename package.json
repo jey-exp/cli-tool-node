@@ -1,5 +1,5 @@
 {
-  "name": "allinone_trial",
+  "name": "mycli",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
@@ -17,6 +17,6 @@
     "uuid": "^11.1.0"
   },
   "bin": {
-  "allinone": "./index.js"
+  "mycli": "./index.js"
   }
 }

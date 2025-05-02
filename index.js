@@ -10,7 +10,7 @@ const { add_task, logging, list_tasks, delete_taks, complete_task } = require('.
 const program = new Command();
 
 program
-    .name("allinone")
+    .name("mycli")
     .description("CLI tool to manage notes and tasks")
     .version("1.0.0")
 
