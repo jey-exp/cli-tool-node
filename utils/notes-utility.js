@@ -21,11 +21,8 @@ const writeFile = (content) =>{
 }
 
 const addNote = (title, notes, tags)=>{
-    console.log("Adding note bro...");
-    console.log("title : ", title);
-    console.log("notes :", notes);
-    console.log("tags :", tags);
-    
+    const err =[];
+    const mess =[];
     try {
         const file_content = readFile();
         const new_note = {
@@ -38,9 +35,12 @@ const addNote = (title, notes, tags)=>{
             status : "live"
         }
         file_content.push(new_note);
+        mess.push({message:"Added new note"});
         writeFile(file_content);
+        return {err, mess};
     } catch (error) {
-        console.error("Error in adding : ", error);
+        err.push({error:error});
+        return {err, mess};
     }
 }
 

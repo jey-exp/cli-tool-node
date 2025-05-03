@@ -4,7 +4,7 @@ const { Command } = require('commander');
 const chalk = require('chalk');
 const ora = require('ora').default;
 const {addNote, list_notes, delete_note} = require("./utils/notes-utility");
-const { add_task, logging, list_tasks, delete_taks, complete_task } = require('./utils/task-untility');
+const { add_task, logging, list_tasks, delete_taks, complete_task } = require('./utils/task-utility');
 
 
 const program = new Command();
@@ -18,15 +18,27 @@ program
     .command("add-note")
     .description('Adding a new note')
     .argument('<title>', 'Title')
-    .option('-n --note <notes...>', 'Notes')
+    .option('-p --points <notes...>', 'Notes')
     .option('-t --tags <tags...>', 'Tags associated with a note')
     .action((title, options) =>{
-        const spinner = ora("Proccessing your request");
-        const notes = options.note || [];
+        const spinner = ora("Proccessing your request").start();
+        const points = options.points || [];
         const tags = options.tags || [];
-        const result = addNote(title, notes, tags);
-        spinner.succeed("Proccessed your request");
-        console.log("Added a note from index");
+        const {err, mess} = addNote(title, points, tags);
+        setTimeout(() => {
+            if(err.length == 0){
+                spinner.succeed("Request proccessed");
+                mess.map(item=>{
+                    console.log(item.message);
+                })
+            }
+            else{
+                spinner.fail("Error");
+                err.map((item)=>{
+                    console.error("Error : ", item.error)
+                })
+            }
+        }, 1000);
     })
 
 program
@@ -34,13 +46,13 @@ program
     .option('-s --sort [order]', 'To sort the output', 'asc')
     .option('-t --tag <tags...>', 'Tags to search with')
     .action((options)=>{
-        const spinner = ora("Proccessing your request");
+        const spinner = ora("Proccessing your request").start();
         const order = options.sort || "asc";
         const tags = options.tag || [];
         const {err, mess, res} = list_notes(tags, order);
         setTimeout(() => {
             if(err.length == 0){
-                const spinner = ora("Processing your request");
+                spinner.succeed("Request proccessed");
                 mess.map(item=>{
                     console.log(item.message);
                 })
@@ -59,7 +71,7 @@ program
     .command("delete-note")
     .argument('<id>', 'ID of the note, Use ls to see the ID of the note.')
     .action((id)=>{
-        const spinner = ora("Proccessing your request");
+        const spinner = ora("Proccessing your request").start();
         const {err, mess} = delete_note(id);
         setTimeout(() => {
             if(err.length ==0){
@@ -82,9 +94,9 @@ program
     .argument('<title>', 'Title of task')
     .option('-d --description <description...>', 'Description of the task')
     .action((title, options)=>{
-        const spinner = ora("Processing your request");
+        const spinner = ora("Processing your request").start();
         const des = options.description || []
-        const {err, mess} = add_task(title, options);
+        const {err, mess} = add_task(title, des);
         setTimeout(() => {
             if(err.length == 0){
                 spinner.succeed("Request proccessed");
@@ -104,7 +116,7 @@ program
 program
     .command("log-task")
     .action(()=>{
-        const spinner = ora("Proccessing your request");
+        const spinner = ora("Proccessing your request").start();
         const {err, mess, res} = logging();
         setTimeout(() => {
             if(err.length == 0){
