@@ -145,14 +145,14 @@ program
         }, 500);
         setTimeout(() => {
             if(err.length ==0){
-                spinner.fail("Error");
+                spinner.succeed("Request proccessed");
                 mess.forEach((item)=>{
                     console.log(item.message);
                 })
                 console.log(tasks_to_do);
             }
             else{
-                spinner.succeed("Request proccessed");
+                spinner.fail("Error");
                 err.forEach((item)=>{
                     console.error(item.error);
                 })
@@ -190,13 +190,13 @@ program
         const {err, mess} = complete_task(id);
         setTimeout(() => {
             if(err.length==0){
-                spinner.fail("Error");
+                spinner.succeed("Request proccessed")
                 mess.map((item)=>{
                     console.log(item.message);
                 })
             }
             else{
-                spinner.succeed("Request proccessed")
+                spinner.fail("Error");
                 err.map((item)=>{
                     console.error("Error : ", item.error);
                 })
