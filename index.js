@@ -21,11 +21,11 @@ program
     .option('-n --note <notes...>', 'Notes')
     .option('-t --tags <tags...>', 'Tags associated with a note')
     .action((title, options) =>{
+        const spinner = ora("Proccessing your request");
         const notes = options.note || [];
         const tags = options.tags || [];
-        const spinner = ora('Adding note...').start();
         const result = addNote(title, notes, tags);
-        spinner.succeed(`Added:${title}`);
+        spinner.succeed("Proccessed your request");
         console.log("Added a note from index");
     })
 
@@ -34,37 +34,47 @@ program
     .option('-s --sort [order]', 'To sort the output', 'asc')
     .option('-t --tag <tags...>', 'Tags to search with')
     .action((options)=>{
+        const spinner = ora("Proccessing your request");
         const order = options.sort || "asc";
         const tags = options.tag || [];
         const {err, mess, res} = list_notes(tags, order);
-        if(err.length == 0){
-            mess.map(item=>{
-                console.log(item.message);
-            })
-            console.log(res);
-        }
-        else{
-            err.map((item)=>{
-                console.error("Error : ", item.error)
-            })
-        }
+        setTimeout(() => {
+            if(err.length == 0){
+                const spinner = ora("Processing your request");
+                mess.map(item=>{
+                    console.log(item.message);
+                })
+                console.log(res);
+            }
+            else{
+                spinner.fail("Error");
+                err.map((item)=>{
+                    console.error("Error : ", item.error)
+                })
+            }
+        }, 1000);
     })
 
 program
     .command("delete-note")
     .argument('<id>', 'ID of the note, Use ls to see the ID of the note.')
     .action((id)=>{
-        const {error, message} = delete_note(id);
-        if(error.length ==0){
-            message.map(item=>{
-                console.log(item.message);
-            })
-        }
-        else{
-            error.map(item=>{
-                console.error("Error: ", item.error);
-            })
-        }
+        const spinner = ora("Proccessing your request");
+        const {err, mess} = delete_note(id);
+        setTimeout(() => {
+            if(err.length ==0){
+                spinner.succeed("Request proccessed");
+                mess.map(item=>{
+                    console.log(item.message);
+                })
+            }
+            else{
+                spinner.fail("Error");
+                err.map(item=>{
+                    console.error("Error: ", item.error);
+                })
+            }
+        }, 1000);
     })
 
 program
@@ -72,86 +82,114 @@ program
     .argument('<title>', 'Title of task')
     .option('-d --description <description...>', 'Description of the task')
     .action((title, options)=>{
+        const spinner = ora("Processing your request");
         const des = options.description || []
         const {err, mess} = add_task(title, options);
-        if(err.length == 0){
-            mess.map((item) => {
-              console.log(item.message);
-            });
-        }
-        else{
-            err.map((item)=>{
-                console.error("Error : ", item.error);
-            })
-        }
+        setTimeout(() => {
+            if(err.length == 0){
+                spinner.succeed("Request proccessed");
+                mess.map((item) => {
+                  console.log(item.message);
+                });
+            }
+            else{
+                spinner.fail("Error");
+                err.map((item)=>{
+                    console.error("Error : ", item.error);
+                })
+            }
+        }, 1000);
     })
 
 program
     .command("log-task")
     .action(()=>{
+        const spinner = ora("Proccessing your request");
         const {err, mess, res} = logging();
-        if(err.length == 0){
-            mess.forEach((item)=>{
-                console.log(item.message);
-          })
-          console.log(res);
-        }
-        else{
-            err.forEach((item)=>{
-                console.error("Error : ", item.error);
-            })
-        }
+        setTimeout(() => {
+            if(err.length == 0){
+                spinner.succeed("Request proccessed");
+                mess.forEach((item)=>{
+                    console.log(item.message);
+              })
+              console.log(res);
+            }
+            else{
+                spinner.fail("Error");
+                err.forEach((item)=>{
+                    console.error("Error : ", item.error);
+                })
+            }
+        }, 1000);
     })
 
 program
     .command("ls-task")
     .action(()=>{
+        const spinner = ora("Fetching all tasks").start();
         const {err, mess, tasks_to_do} = list_tasks();
-        if(err.length ==0){
-            mess.forEach((item)=>{
-                console.log(item.message);
-            })
-            console.log(tasks_to_do);
-        }
-        else{
-            err.forEach((item)=>{
-                console.error(item.error);
-            })
-        }
+        setTimeout(() => {
+            spinner.text = "Processing the list of tasks";
+        }, 500);
+        setTimeout(() => {
+            if(err.length ==0){
+                spinner.fail("Error");
+                mess.forEach((item)=>{
+                    console.log(item.message);
+                })
+                console.log(tasks_to_do);
+            }
+            else{
+                spinner.succeed("Request proccessed");
+                err.forEach((item)=>{
+                    console.error(item.error);
+                })
+            }
+        }, 1500);
     })
 
 program
     .command("delete-task")
     .argument('<id>', 'Task id')
     .action((id)=>{
+        const spinner = ora("Processing the request").start();
         const{err, mess} = delete_taks(id);
-        if(err.length==0){
-            mess.map((item)=>{
-                console.log(item.message);
-            })
-        }
-        else{
-            err.map((item)=>{
-                console.error("Error : ", item.error);
-            })
-        }
+        setTimeout(() => {
+            if(err.length==0){
+                spinner.succeed("Request proccessed");
+                mess.map((item)=>{
+                    console.log(item.message);
+                })
+            }
+            else{
+                spinner.fail("Error");
+                err.map((item)=>{
+                    console.error("Error : ", item.error);
+                })
+            }
+        }, 1000);
     })
 
 program
     .command("task-done")
     .argument('<id>', 'Task id')
     .action((id)=>{
+        const spinner = ora("Processing your request").start();
         const {err, mess} = complete_task(id);
-        if(err.length==0){
-            mess.map((item)=>{
-                console.log(item.message);
-            })
-        }
-        else{
-            err.map((item)=>{
-                console.error("Error : ", item.error);
-            })
-        }
+        setTimeout(() => {
+            if(err.length==0){
+                spinner.fail("Error");
+                mess.map((item)=>{
+                    console.log(item.message);
+                })
+            }
+            else{
+                spinner.succeed("Request proccessed")
+                err.map((item)=>{
+                    console.error("Error : ", item.error);
+                })
+            }
+        }, 1000);
     })
 
 program.parse();
