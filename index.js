@@ -18,13 +18,13 @@ program
     .command("add-note")
     .description('Adding a new note')
     .argument('<title>', 'Title')
-    .option('-p --points <notes...>', 'Notes')
+    .option('-b --bullets <bullets...>', 'Notes')
     .option('-t --tags <tags...>', 'Tags associated with a note')
     .action((title, options) =>{
         const spinner = ora("Proccessing your request").start();
-        const points = options.points || [];
+        const bullets = options.bullets || [];
         const tags = options.tags || [];
-        const {err, mess} = addNote(title, points, tags);
+        const {err, mess} = addNote(title, bullets, tags);
         setTimeout(() => {
             if(err.length == 0){
                 spinner.succeed("Request proccessed");
@@ -42,7 +42,7 @@ program
     })
 
 program
-    .command("ls-note")
+    .command("ls-notes")
     .option('-s --sort [order]', 'To sort the output', 'asc')
     .option('-t --tag <tags...>', 'Tags to search with')
     .action((options)=>{
@@ -114,7 +114,7 @@ program
     })
 
 program
-    .command("log-task")
+    .command("log-tasks")
     .action(()=>{
         const spinner = ora("Proccessing your request").start();
         const {err, mess, res} = logging();
@@ -136,7 +136,7 @@ program
     })
 
 program
-    .command("ls-task")
+    .command("ls-tasks")
     .action(()=>{
         const spinner = ora("Fetching all tasks").start();
         const {err, mess, tasks_to_do} = list_tasks();

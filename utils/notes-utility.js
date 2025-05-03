@@ -20,14 +20,14 @@ const writeFile = (content) =>{
     fs.writeFileSync(filePath, JSON.stringify(content, null, 2));
 }
 
-const addNote = (title, notes, tags)=>{
+const addNote = (title, bullets, tags)=>{
     const err =[];
     const mess =[];
     try {
         const file_content = readFile();
         const new_note = {
             title : title,
-            notes : notes,
+            bullets : bullets,
             tags : tags,
             date: new Date().toISOString().split('T')[0],
             time: new Date().toLocaleTimeString(),
