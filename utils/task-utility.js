@@ -82,7 +82,7 @@ const delete_taks = (id)=>{
             if(item.id == id){
                 mess.push({message:`Task with id ${id} found!`})
                 if(item.status === "deleted"){
-                    mess.push({message : "Task already deleted"});
+                    err.push({error : `Task (Id:${id}) already deleted`});
                     flag = 1;
                 }
                 else{
@@ -96,7 +96,6 @@ const delete_taks = (id)=>{
         }
         else if(flag==0){
             writeFile(file_content);
-            mess.push({message:`Task Id :${id}`});
         }
         return {err, mess};
     } catch (error) {
