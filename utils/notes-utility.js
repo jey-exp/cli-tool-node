@@ -35,7 +35,7 @@ const addNote = (title, bullets, tags)=>{
             status : "live"
         }
         file_content.push(new_note);
-        mess.push({message:"Added new note"});
+        mess.push({message:`Note Id : ${new_note.id}`});
         writeFile(file_content);
         return {err, mess};
     } catch (error) {
@@ -89,7 +89,6 @@ const delete_note = (id)=>{
                     return;
                 }
                 element.status = "deleted";
-                mess.push({message:`Deleted note with id ${id}`});
                 return;
             }
         });

@@ -28,9 +28,13 @@ program
         setTimeout(() => {
             if(err.length == 0){
                 spinner.succeed("Request proccessed");
+                console.log("~~~~~~~~~~~~~~~~~~~~~~~");
                 mess.map(item=>{
-                    console.log(item.message);
+                    console.log("--",item.message,"--");
                 })
+                console.log("Note added successfully ✅");
+                
+                console.log("~~~~~~~~~~~~~~~~~~~~~~~");
             }
             else{
                 spinner.fail("Error");
@@ -54,9 +58,21 @@ program
             if(err.length == 0){
                 spinner.succeed("Request proccessed");
                 mess.map(item=>{
-                    console.log(item.message);
+                    console.log("--",item.message, "--");
                 })
-                console.log(res);
+                res.map((item, index, array)=>{
+                    console.log("~~~~~~~~~~~~~~~~~~~~~~~");
+                    console.log("Note title :", item.title);
+                    console.log("Note's Id :", item.id);
+                    
+                    console.log("Notes:-");
+                    item.notes.map((item)=>{
+                        console.log(item);
+                    })
+                    if(index == array.length -1){
+                        console.log("~~~~~~~~~~~~~~~~~~~~~~~");
+                    }
+                })
             }
             else{
                 spinner.fail("Error");
@@ -76,16 +92,21 @@ program
         setTimeout(() => {
             if(err.length ==0){
                 spinner.succeed("Request proccessed");
+                console.log("~~~~~~~~~~~~~~~~~~~~~~~");
                 mess.map(item=>{
-                    console.log(item.message);
+                    console.log("--",item.message,"--");
                 })
+                console.log(`Note with Id ${id} is deleted ✅`);
+                
             }
             else{
                 spinner.fail("Error");
+                console.log("~~~~~~~~~~~~~~~~~~~~~~~");
                 err.map(item=>{
                     console.error("Error: ", item.error);
                 })
             }
+            console.log("~~~~~~~~~~~~~~~~~~~~~~~");
         }, 1000);
     })
 
@@ -100,16 +121,21 @@ program
         setTimeout(() => {
             if(err.length == 0){
                 spinner.succeed("Request proccessed");
+                console.log("~~~~~~~~~~~~~~~~~~~~~~~");
                 mess.map((item) => {
-                  console.log(item.message);
+                  console.log("--",item.message,"--");
                 });
+                console.log("New task added successfully ✅");
+                
             }
             else{
                 spinner.fail("Error");
+                console.log("~~~~~~~~~~~~~~~~~~~~~~~");
                 err.map((item)=>{
                     console.error("Error : ", item.error);
                 })
             }
+            console.log("~~~~~~~~~~~~~~~~~~~~~~~");
         }, 1000);
     })
 
@@ -121,13 +147,28 @@ program
         setTimeout(() => {
             if(err.length == 0){
                 spinner.succeed("Request proccessed");
+                console.log("~~~~~~~~~~~~~~~~~~~~~~~");
                 mess.forEach((item)=>{
-                    console.log(item.message);
+                    console.log("--",item.message,"--");
               })
-              console.log(res);
+              res.map((item, index, array)=>{
+                console.log("Task title :", item.title);
+                console.log("Task Id :", item.id);
+                console.log("Task notes :-");
+                item.description.map((item)=>{
+                    console.log("->",item);
+                })
+                if(index === array.length -1){
+                    console.log("~~~~~~~~~~~~~~~~~~~~~~~");
+                }
+                else{
+                    console.log("");
+                }
+              })
             }
             else{
                 spinner.fail("Error");
+                console.log("~~~~~~~~~~~~~~~~~~~~~~~");
                 err.forEach((item)=>{
                     console.error("Error : ", item.error);
                 })
@@ -138,7 +179,7 @@ program
 program
     .command("ls-tasks")
     .action(()=>{
-        const spinner = ora("Fetching all tasks").start();
+        const spinner = ora("Fetching tasks").start();
         const {err, mess, tasks_to_do} = list_tasks();
         setTimeout(() => {
             spinner.text = "Processing the list of tasks";
@@ -146,16 +187,37 @@ program
         setTimeout(() => {
             if(err.length ==0){
                 spinner.succeed("Request proccessed");
+                console.log("~~~~~~~~~~~~~~~~~~~~~~~");
                 mess.forEach((item)=>{
-                    console.log(item.message);
+                    console.log("--",item.message,"--");
                 })
-                console.log(tasks_to_do);
+                tasks_to_do.map((item, index, array)=>{
+                    console.log("Task title :", item.title);
+                    console.log("Task Id :", item.id);
+                    if(item.description.length > 0){
+                        item.description.map((item)=>{
+                            console.log("->", item);
+                        })
+                    }
+                    else{
+                        console.log("--No description for task--");
+                    }
+                    if(index == array.length -1){
+                        console.log("~~~~~~~~~~~~~~~~~~~~~~~");
+                    }
+                    else{
+                        console.log("");
+                        
+                    }
+                })
             }
             else{
                 spinner.fail("Error");
+                console.log("~~~~~~~~~~~~~~~~~~~~~~~");
                 err.forEach((item)=>{
                     console.error(item.error);
                 })
+                console.log("~~~~~~~~~~~~~~~~~~~~~~~");
             }
         }, 1500);
     })
@@ -169,16 +231,20 @@ program
         setTimeout(() => {
             if(err.length==0){
                 spinner.succeed("Request proccessed");
+                console.log("~~~~~~~~~~~~~~~~~~~~~~~");
                 mess.map((item)=>{
-                    console.log(item.message);
+                    console.log("--",item.message,"--");
                 })
+                console.log("Task deleted successfully ✅");
             }
             else{
                 spinner.fail("Error");
+                console.log("~~~~~~~~~~~~~~~~~~~~~~~");
                 err.map((item)=>{
                     console.error("Error : ", item.error);
                 })
             }
+            console.log("~~~~~~~~~~~~~~~~~~~~~~~");
         }, 1000);
     })
 
@@ -190,17 +256,22 @@ program
         const {err, mess} = complete_task(id);
         setTimeout(() => {
             if(err.length==0){
-                spinner.succeed("Request proccessed")
+                spinner.succeed("Request proccessed");
+                console.log("~~~~~~~~~~~~~~~~~~~~~~~");
                 mess.map((item)=>{
-                    console.log(item.message);
+                    console.log("--",item.message,"--");
                 })
+                console.log(`Task (Id:${id}) marked as complete ✅`);
+                
             }
             else{
                 spinner.fail("Error");
+                console.log("~~~~~~~~~~~~~~~~~~~~~~~");
                 err.map((item)=>{
                     console.error("Error : ", item.error);
                 })
             }
+            console.log("~~~~~~~~~~~~~~~~~~~~~~~");
         }, 1000);
     })
 
