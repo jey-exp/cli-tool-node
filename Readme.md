@@ -12,7 +12,7 @@ A lightweight CLI tool to manage your tasks and notes — straight from the term
 ## Installation
 
 ```bash
-npm install -g mycli
+npm install -g <not-yet-published>
 ```
 
 ## Commands
@@ -56,7 +56,11 @@ ls-note
 git clone https://github.com/jey-exp/cli-tool-node.git
 cd cli-tool-node
 npm install
+npm link
 ```
+_You are good to go!_ 
+
+Now call it by `mycli` in your terminal
 
 ---
 
