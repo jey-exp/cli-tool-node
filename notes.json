@@ -1,7 +1,7 @@
 [
   {
     "title": "Do the thing",
-    "notes": [
+    "bullets": [
       "First",
       "Second"
     ],
@@ -15,7 +15,7 @@
   },
   {
     "title": "try",
-    "notes": [
+    "bullets": [
       "Helllo bro"
     ],
     "tags": [
@@ -25,5 +25,19 @@
     "time": "12:46:53 PM",
     "id": 2,
     "status": "deleted"
+  },
+  {
+    "title": "Test1",
+    "bullets": [
+      "Bro this is cool",
+      "This is awesome",
+      "It workds nice",
+      "I need to build it up"
+    ],
+    "tags": [],
+    "date": "2025-05-05",
+    "time": "5:12:28 PM",
+    "id": 3,
+    "status": "live"
   }
 ]

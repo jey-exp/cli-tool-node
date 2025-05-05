@@ -66,9 +66,15 @@ program
                     console.log("Note's Id :", item.id);
                     
                     console.log("Notes:-");
-                    item.notes.map((item)=>{
-                        console.log(item);
-                    })
+                    if(item.bullets.length > 0){
+                        item.bullets.map((item)=>{
+                            console.log("->",item);
+                        })
+                    }
+                    else{
+                        console.log("--No bulletins in this note--");
+                        
+                    }
                     if(index == array.length -1){
                         console.log("~~~~~~~~~~~~~~~~~~~~~~~");
                     }
