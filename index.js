@@ -28,9 +28,13 @@ program
         setTimeout(() => {
             if(err.length == 0){
                 spinner.succeed("Request proccessed");
+                console.log("~~~~~~~~~~~~~~~~~~~~~~~");
                 mess.map(item=>{
-                    console.log(item.message);
+                    console.log("--",item.message,"--");
                 })
+                console.log("Note added successfully ✅");
+                
+                console.log("~~~~~~~~~~~~~~~~~~~~~~~");
             }
             else{
                 spinner.fail("Error");
@@ -54,9 +58,21 @@ program
             if(err.length == 0){
                 spinner.succeed("Request proccessed");
                 mess.map(item=>{
-                    console.log(item.message);
+                    console.log("--",item.message, "--");
                 })
-                console.log(res);
+                res.map((item, index, array)=>{
+                    console.log("~~~~~~~~~~~~~~~~~~~~~~~");
+                    console.log("Note title :", item.title);
+                    console.log("Note's Id :", item.id);
+                    
+                    console.log("Notes:-");
+                    item.notes.map((item)=>{
+                        console.log(item);
+                    })
+                    if(index == array.length -1){
+                        console.log("~~~~~~~~~~~~~~~~~~~~~~~");
+                    }
+                })
             }
             else{
                 spinner.fail("Error");
@@ -76,16 +92,21 @@ program
         setTimeout(() => {
             if(err.length ==0){
                 spinner.succeed("Request proccessed");
+                console.log("~~~~~~~~~~~~~~~~~~~~~~~");
                 mess.map(item=>{
-                    console.log(item.message);
+                    console.log("--",item.message,"--");
                 })
+                console.log(`Note with Id ${id} is deleted ✅`);
+                
             }
             else{
                 spinner.fail("Error");
+                console.log("~~~~~~~~~~~~~~~~~~~~~~~");
                 err.map(item=>{
                     console.error("Error: ", item.error);
                 })
             }
+            console.log("~~~~~~~~~~~~~~~~~~~~~~~");
         }, 1000);
     })
 
