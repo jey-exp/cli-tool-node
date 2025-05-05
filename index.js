@@ -65,15 +65,14 @@ program
                     console.log("Note title :", item.title);
                     console.log("Note's Id :", item.id);
                     
-                    console.log("Notes:-");
                     if(item.bullets.length > 0){
+                        console.log("Bulletins:-");
                         item.bullets.map((item)=>{
                             console.log("->",item);
                         })
                     }
                     else{
                         console.log("--No bulletins in this note--");
-                        
                     }
                     if(index == array.length -1){
                         console.log("~~~~~~~~~~~~~~~~~~~~~~~");
@@ -160,10 +159,15 @@ program
               res.map((item, index, array)=>{
                 console.log("Task title :", item.title);
                 console.log("Task Id :", item.id);
-                console.log("Task notes :-");
-                item.description.map((item)=>{
-                    console.log("->",item);
-                })
+                if(item.description.length > 0){
+                    console.log("Task notes :-");
+                    item.description.map((item)=>{
+                        console.log("->",item);
+                    })
+                }
+                else{
+                    console.log("--No description for this task--");
+                }
                 if(index === array.length -1){
                     console.log("~~~~~~~~~~~~~~~~~~~~~~~");
                 }
