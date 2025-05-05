@@ -32,7 +32,6 @@ const add_task = (title, des)=>{
         }
         file_content.push(task);
         writeFile(file_content);
-        mess.push({message:`Task addedd`});
         mess.push({message:` Task id : ${task.id}`});
         return {err, mess};
     } catch (error) {
@@ -62,9 +61,9 @@ const logging = ()=>{
     const mess =[];
     try {
         const file_content = readFile();
-        const res = file_content.filter(item=> item.status === "done" );
+        const res = file_content.filter(item=> item.status === "done" || item.status==="on-going" );
         if(res.length === 0){
-            mess.push({message:"No task history found"});
+            mess.push({message:"No task found"});
         }
         return {err, mess, res};
     } catch (error) {
@@ -97,7 +96,7 @@ const delete_taks = (id)=>{
         }
         else if(flag==0){
             writeFile(file_content);
-            mess.push({message:`Deleted task with ID ${id}`});
+            mess.push({message:`Task Id :${id}`});
         }
         return {err, mess};
     } catch (error) {
@@ -116,7 +115,7 @@ const complete_task = (id)=>{
             if(item.id == id){
                 mess.push({message:`Task with Id ${id} found`});
                 if(item.status === "done"){
-                    mess.push({message:`Task with Id ${id} is already completed`});
+                    err.push({error:`Task (Id:${id}) is already completed`});
                     flag =1;
                 }
                 else{
@@ -130,7 +129,6 @@ const complete_task = (id)=>{
         }
         else if(flag==0){
             writeFile(file_content);
-            mess.push({message : "Task Completed"});
         }
         return {err, mess};
     } catch (error) {
