@@ -181,9 +181,31 @@ program
 
 program
     .command("add-task")
-    .argument('<title>', 'Title of task')
+    .argument('[title]', 'Title of task')
     .option('-d --description <description...>', 'Description of the task')
+    .option('-h --help', 'Show help for add-task')
     .action((title, options)=>{
+        if (options.help || !title) {
+            console.log("=========================================");
+            console.log("📝 Command: add-task");
+            console.log("-----------------------------------------");
+            console.log("📌 Usage:");
+            console.log("  add-task <title> [options]");
+            console.log("");
+            console.log("🔧 Options:");
+            console.log("  -d, --description <desc...>  Optional description text for the task");
+            console.log("");
+            console.log("💡 Example:");
+            console.log("  add-task `Fix bug in auth module` ");
+            console.log("    --description `Occurs on login` `Happens when password is incorrect`");
+            console.log("=========================================");
+            return;
+        }
+        if (!title) {
+            console.error("❌ Error: Title is required to add a task.");
+            console.log("Use `add-task -h` for help.");
+            process.exit(1);
+        }
         const spinner = ora("Processing your request").start();
         const des = options.description || []
         const {err, mess} = add_task(title, des);
@@ -210,7 +232,23 @@ program
 
 program
     .command("log-tasks")
-    .action(()=>{
+    .option('-h --help', 'Show help for log-tasks')
+    .action((options)=>{
+        if (options.help) {
+            console.log("=========================================");
+            console.log("📋 Command: log-tasks");
+            console.log("-----------------------------------------");
+            console.log("📌 Usage:");
+            console.log("  log-tasks");
+            console.log("");
+            console.log("📝 Description:");
+            console.log("  Displays all the tasks that have been logged, along with their titles, IDs, and optional descriptions.");
+            console.log("");
+            console.log("💡 Example:");
+            console.log("  log-tasks");
+            console.log("=========================================");
+            return;
+        }
         const spinner = ora("Proccessing your request").start();
         const {err, mess, res} = logging();
         setTimeout(() => {
@@ -252,7 +290,23 @@ program
 
 program
     .command("ls-tasks")
-    .action(()=>{
+    .option('-h --help', "Show help or ls-tasks")
+    .action((options)=>{
+        if (options.help) {
+            console.log("=========================================");
+            console.log("📋 Command: ls-tasks");
+            console.log("-----------------------------------------");
+            console.log("📌 Usage:");
+            console.log("  ls-tasks");
+            console.log("");
+            console.log("📝 Description:");
+            console.log("  Lists all pending tasks with their titles, IDs, and optional descriptions.");
+            console.log("");
+            console.log("💡 Example:");
+            console.log("  ls-tasks");
+            console.log("=========================================");
+            return;
+        }
         const spinner = ora("Fetching tasks").start();
         const {err, mess, tasks_to_do} = list_tasks();
         setTimeout(() => {
@@ -298,8 +352,30 @@ program
 
 program
     .command("delete-task")
-    .argument('<id>', 'Task id')
-    .action((id)=>{
+    .argument('[id]', 'Task id')
+    .option('-h --help', "Show help or ls-tasks")
+    .action((id, options)=>{
+        if (options.help || !id) {
+            console.log("=========================================");
+            console.log("🗑️ Command: delete-task");
+            console.log("-----------------------------------------");
+            console.log("📌 Usage:");
+            console.log("  delete-task <id>");
+            console.log("");
+            console.log("📝 Description:");
+            console.log("  Deletes a task based on its ID.");
+            console.log("  Use `ls-tasks` to view task IDs.");
+            console.log("");
+            console.log("💡 Example:");
+            console.log("  delete-task 123abc");
+            console.log("=========================================");
+            return;
+        }
+        if(!id){
+            console.error("❌ Error: Id is required to delete a task.");
+            console.log("Use `delete-task -h` for help.");
+            process.exit(1);
+        }
         const spinner = ora("Processing the request").start();
         const{err, mess} = delete_taks(id);
         setTimeout(() => {
@@ -324,8 +400,30 @@ program
 
 program
     .command("task-done")
-    .argument('<id>', 'Task id')
-    .action((id)=>{
+    .argument('[id]', 'Task id')
+    .option('-h --help', "Show help or ls-tasks")
+    .action((id, options)=>{
+        if (options.help || !id) {
+            console.log("=========================================");
+            console.log("✅ Command: task-done");
+            console.log("-----------------------------------------");
+            console.log("📌 Usage:");
+            console.log("  task-done <id>");
+            console.log("");
+            console.log("📝 Description:");
+            console.log("  Marks the task with the given ID as complete.");
+            console.log("  Use `ls-tasks` to see task IDs.");
+            console.log("");
+            console.log("💡 Example:");
+            console.log("  task-done 12");
+            console.log("=========================================");
+            return;
+        }
+        if(!id){
+            console.error("❌ Error: Id is required to mark a task as completed.");
+            console.log("Use `task-done -h` for help.");
+            process.exit(1);
+        }
         const spinner = ora("Processing your request").start();
         const {err, mess} = complete_task(id);
         setTimeout(() => {
