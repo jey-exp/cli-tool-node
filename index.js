@@ -22,7 +22,7 @@ program
     .option('-t --tags <tags...>', 'Tags associated with a note')
     .option('-h --help', 'Show help for add-note')
     .action((title, options) =>{
-        if(options.help | !title){
+        if(options.help || !title){
             console.log("=========================================");
             console.log("📝 Command: add-note");
             console.log("-----------------------------------------");
