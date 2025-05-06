@@ -17,10 +17,35 @@ program
 program
     .command("add-note")
     .description('Adding a new note')
-    .argument('<title>', 'Title')
+    .argument('[title]', 'Title')
     .option('-b --bullets <bullets...>', 'Notes')
     .option('-t --tags <tags...>', 'Tags associated with a note')
+    .option('-h --help', 'Show help for add-note')
     .action((title, options) =>{
+        if(options.help | !title){
+            console.log("=========================================");
+            console.log("📝 Command: add-note");
+            console.log("-----------------------------------------");
+            console.log("📌 Usage:");
+            console.log("  add-note `note title` [options]");
+            console.log("");
+            console.log("🔧 Options:");
+            console.log("  -b, --bullets     Add bullet points under the note");
+            console.log("  -t, --tags        Add one or more tags to the note");
+            console.log("");
+            console.log("💡 Example:");
+            console.log("  add-note `Octernships are on hold` ");
+            console.log("    --bullets `GitHub is not willing to continue octernships` ");
+            console.log("              `Maybe it can be resumed a year later` ");
+            console.log("    --tags `github` `octernship` `internship`");
+            console.log("=========================================");
+            return;
+        }
+        if (!title) {
+            console.error("❌ Error: Title is required to add a note.");
+            console.log("Use `add-note -h` for usage info.");
+            process.exit(1);
+        }
         const spinner = ora("Proccessing your request").start();
         const bullets = options.bullets || [];
         const tags = options.tags || [];
@@ -49,7 +74,24 @@ program
     .command("ls-notes")
     .option('-s --sort [order]', 'To sort the output', 'asc')
     .option('-t --tag <tags...>', 'Tags to search with')
+    .option('-h --help', 'Show help for ls-notes')
     .action((options)=>{
+        if (options.help) {
+            console.log("=========================================");
+            console.log("📚 Command: ls-notes");
+            console.log("-----------------------------------------");
+            console.log("📌 Usage:");
+            console.log("  ls-notes [options]");
+            console.log("");
+            console.log("🔧 Options:");
+            console.log("  -s, --sort [order]   Sort notes (asc or desc). Default is 'asc'");
+            console.log("  -t, --tag <tags...>  Filter notes by one or more tags");
+            console.log("");
+            console.log("💡 Example:");
+            console.log("  ls-notes --sort desc --tag github internship");
+            console.log("=========================================");
+            return;
+        }
         const spinner = ora("Proccessing your request").start();
         const order = options.sort || "asc";
         const tags = options.tag || [];
@@ -90,8 +132,30 @@ program
 
 program
     .command("delete-note")
-    .argument('<id>', 'ID of the note, Use ls to see the ID of the note.')
-    .action((id)=>{
+    .argument('[id]', 'ID of the note, Use ls to see the ID of the note.')
+    .option('-h --help', 'Show help for delete-note')
+    .action((id, options)=>{
+        if (options.help || !id) {
+            console.log("=========================================");
+            console.log("🗑️ Command: delete-note");
+            console.log("-----------------------------------------");
+            console.log("📌 Usage:");
+            console.log("  delete-note <id>");
+            console.log("");
+            console.log("📝 Description:");
+            console.log("  Deletes the note with the given ID.");
+            console.log("  You can find the ID using the `ls-notes` command.");
+            console.log("");
+            console.log("💡 Example:");
+            console.log("  delete-note 12");
+            console.log("=========================================");
+            return;
+        }
+        if (!id) {
+            console.error("❌ Error: Note ID is required.");
+            console.log("Use `delete-note -h` for help.");
+            process.exit(1);
+        }
         const spinner = ora("Proccessing your request").start();
         const {err, mess} = delete_note(id);
         setTimeout(() => {
