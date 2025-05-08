@@ -61,5 +61,20 @@
     "time": "5:18:07 PM",
     "id": 5,
     "status": "live"
+  },
+  {
+    "title": "Start open-source project",
+    "bullets": [
+      "Choose license",
+      "Setup repo"
+    ],
+    "tags": [
+      "project",
+      "oss"
+    ],
+    "date": "2025-05-07",
+    "time": "4:09:09 PM",
+    "id": 6,
+    "status": "live"
   }
 ]
