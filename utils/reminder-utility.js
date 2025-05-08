@@ -81,4 +81,61 @@ const schedule_reminder = (message, duration) => {
   subprocess.unref();
 };
 
-module.exports = { add_reminder, mark_reminder_completed, schedule_reminder };
+const get_all_reminders = () => {
+  const err = [];
+  const mess = [];
+  try {
+    const reminders = readFile();
+    // Sort reminders: pending first, then by time
+    const sortedReminders = reminders.sort((a, b) => {
+      if (a.status === b.status) {
+        return a.time - b.time;
+      }
+      return a.status === "pending" ? -1 : 1;
+    });
+    return { err, mess, reminders: sortedReminders };
+  } catch (error) {
+    err.push({ error: error.message });
+    return { err, mess, reminders: [] };
+  }
+};
+
+const delete_reminder = (id) => {
+  const err = [];
+  const mess = [];
+  try {
+    const reminders = readFile();
+    const reminderId = parseInt(id, 10);
+    if (isNaN(reminderId)) {
+      err.push({ error: "Invalid reminder ID. ID must be a number." });
+      return { err, mess };
+    }
+
+    const initialLength = reminders.length;
+    const updatedReminders = reminders.filter(
+      (reminder) => reminder.id !== reminderId
+    );
+
+    if (updatedReminders.length === initialLength) {
+      err.push({ error: `Reminder with ID ${reminderId} not found.` });
+      return { err, mess };
+    }
+
+    writeFile(updatedReminders);
+    mess.push({
+      message: `Reminder with ID ${reminderId} deleted successfully.`,
+    });
+    return { err, mess };
+  } catch (error) {
+    err.push({ error: error.message });
+    return { err, mess };
+  }
+};
+
+module.exports = {
+  add_reminder,
+  mark_reminder_completed,
+  schedule_reminder,
+  get_all_reminders,
+  delete_reminder,
+};

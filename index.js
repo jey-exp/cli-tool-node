@@ -12,7 +12,12 @@ const {
   delete_taks,
   complete_task,
 } = require("./utils/task-utility");
-const { add_reminder, schedule_reminder } = require("./utils/reminder-utility");
+const {
+  add_reminder,
+  schedule_reminder,
+  get_all_reminders,
+  delete_reminder,
+} = require("./utils/reminder-utility");
 
 const program = new Command();
 
@@ -478,6 +483,138 @@ program
     mess.forEach((m) => console.log("--", m.message, "--"));
 
     schedule_reminder(message, duration);
+  });
+
+program
+  .command("view-reminders")
+  .description("View all reminders")
+  .option("-h --help", "Show help for view-reminders")
+  .action((options) => {
+    if (options.help) {
+      console.log("=========================================");
+      console.log("⏰ Command: view-reminders");
+      console.log("-----------------------------------------");
+      console.log("📌 Usage:");
+      console.log("  view-reminders");
+      console.log("");
+      console.log("📝 Description:");
+      console.log("  Shows all reminders, with pending reminders listed first");
+      console.log("  followed by completed ones.");
+      console.log("");
+      console.log("💡 Example:");
+      console.log("  view-reminders");
+      console.log("=========================================");
+      return;
+    }
+
+    const spinner = ora("Fetching reminders").start();
+    const { err, mess, reminders } = get_all_reminders();
+
+    setTimeout(() => {
+      if (err.length === 0) {
+        spinner.succeed("Request processed");
+        console.log("~~~~~~~~~~~~~~~~~~~~~~~");
+
+        if (reminders.length === 0) {
+          console.log("No reminders found");
+          console.log("~~~~~~~~~~~~~~~~~~~~~~~");
+          return;
+        }
+
+        let currentStatus = null;
+        reminders.forEach((reminder, index) => {
+          // Add a separator when status changes
+          if (currentStatus !== reminder.status) {
+            if (currentStatus !== null) {
+              console.log("~~~~~~~~~~~~~~~~~~~~~~~");
+            }
+            currentStatus = reminder.status;
+            console.log(`📋 ${currentStatus.toUpperCase()} REMINDERS:`);
+            console.log("~~~~~~~~~~~~~~~~~~~~~~~");
+          }
+
+          const reminderTime = new Date(reminder.time);
+          const timeStr = reminderTime.toLocaleString();
+
+          console.log(`ID: ${reminder.id}`);
+          console.log(`Message: ${reminder.message}`);
+          console.log(`Set for: ${timeStr}`);
+          console.log(`Set on: ${reminder.date} at ${reminder.setTime}`);
+
+          if (reminder.status === "completed") {
+            console.log(
+              `Completed at: ${new Date(reminder.completedAt).toLocaleString()}`
+            );
+          }
+
+          if (index < reminders.length - 1) {
+            console.log("-------------------");
+          }
+        });
+        console.log("~~~~~~~~~~~~~~~~~~~~~~~");
+      } else {
+        spinner.fail("Error");
+        console.log("~~~~~~~~~~~~~~~~~~~~~~~");
+        err.forEach((item) => {
+          console.error("Error:", item.error);
+        });
+        console.log("~~~~~~~~~~~~~~~~~~~~~~~");
+      }
+    }, 1000);
+  });
+
+program
+  .command("delete-reminder")
+  .description("Delete a reminder by its ID")
+  .argument(
+    "[id]",
+    "ID of the reminder to delete. Use 'view-reminders' to find the ID."
+  )
+  .option("-h --help", "Show help for delete-reminder")
+  .action((id, options) => {
+    if (options.help || !id) {
+      console.log("=========================================");
+      console.log("🗑️ Command: delete-reminder");
+      console.log("-----------------------------------------");
+      console.log("📌 Usage:");
+      console.log("  delete-reminder <id>");
+      console.log("");
+      console.log("📝 Description:");
+      console.log("  Deletes the reminder with the specified ID.");
+      console.log("  You can find the ID using the `view-reminders` command.");
+      console.log("");
+      console.log("💡 Example:");
+      console.log("  delete-reminder 3");
+      console.log("=========================================");
+      return;
+    }
+
+    if (!id) {
+      console.error("❌ Error: Reminder ID is required.");
+      console.log("Use `delete-reminder -h` for help.");
+      process.exit(1);
+    }
+
+    const spinner = ora("Processing your request").start();
+    const { err, mess } = delete_reminder(id);
+
+    setTimeout(() => {
+      if (err.length === 0) {
+        spinner.succeed("Request processed");
+        console.log("~~~~~~~~~~~~~~~~~~~~~~~");
+        mess.forEach((item) => {
+          console.log("--", item.message, "--");
+        });
+        console.log(`Reminder deleted successfully ✅`);
+      } else {
+        spinner.fail("Error");
+        console.log("~~~~~~~~~~~~~~~~~~~~~~~");
+        err.forEach((item) => {
+          console.error("Error:", item.error);
+        });
+      }
+      console.log("~~~~~~~~~~~~~~~~~~~~~~~");
+    }, 1000);
   });
 
 program.parse();
