@@ -87,6 +87,7 @@ const get_all_reminders = () => {
   try {
     var reminders = readFile();
     // Sort reminders: pending first, then by time
+    reminders = reminders.filter((item)=>item.status != "deleted");
     const sortedReminders = reminders.sort((a, b) => {
       if (a.status === b.status) {
         return a.time - b.time;
