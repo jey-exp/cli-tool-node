@@ -116,7 +116,7 @@ const delete_reminder = (id) => {
       if(element.id === reminderId){
         if(element.status === "deleted"){
           err.push({error: `Reminder with Id ${reminderId} is already deleted`});
-          return {err, mess};
+          return;
         }
         element.status = "deleted";
         mess.push({
@@ -124,6 +124,9 @@ const delete_reminder = (id) => {
         });
       }
     });
+    if(err.length>0){
+      return {err, mess};
+    }
 
     if(mess.length === 0 && err.length === 0){
       err.push({ error: `Reminder with ID ${reminderId} not found.` });
