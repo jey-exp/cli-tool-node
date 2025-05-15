@@ -85,7 +85,7 @@ const get_all_reminders = () => {
   const err = [];
   const mess = [];
   try {
-    const reminders = readFile();
+    var reminders = readFile();
     // Sort reminders: pending first, then by time
     const sortedReminders = reminders.sort((a, b) => {
       if (a.status === b.status) {
@@ -111,17 +111,25 @@ const delete_reminder = (id) => {
       return { err, mess };
     }
 
-    const initialLength = reminders.length;
-    const updatedReminders = reminders.filter(
-      (reminder) => reminder.id !== reminderId
-    );
+    reminders.forEach(element => {
+      if(element.id === reminderId){
+        if(element.status === "deleted"){
+          err.push({error: `Reminder with Id ${reminderId} is already deleted`});
+          return {err, mess};
+        }
+        element.status = "deleted";
+        mess.push({
+          message: `Reminder with ID ${reminderId} found!.`,
+        });
+      }
+    });
 
-    if (updatedReminders.length === initialLength) {
+    if(mess.length === 0 && err.length === 0){
       err.push({ error: `Reminder with ID ${reminderId} not found.` });
       return { err, mess };
     }
 
-    writeFile(updatedReminders);
+    writeFile(reminders);
     mess.push({
       message: `Reminder with ID ${reminderId} deleted successfully.`,
     });
