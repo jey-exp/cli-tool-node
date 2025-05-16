@@ -462,10 +462,12 @@ program
     const spinner = ora("Scheduling your reminder...").start();
     const rawTime = options.after;
     const duration = ms(rawTime);
-
+    
     if (!duration || duration > ms("2d")) {
       spinner.fail("❌ Invalid duration. Max allowed: 2 days.");
-      console.log("Examples: --after 10m, --after 2h");
+      console.log(chalk.gray("~~~~~~~~~~~~~~~~~~~~~~~"));
+      console.log(chalk.yellow("Examples: --after 10m, --after 2h"));
+      console.log(chalk.gray("~~~~~~~~~~~~~~~~~~~~~~~"));
       return;
     }
 
@@ -473,13 +475,17 @@ program
 
     const { err, mess } = add_reminder(message, fireTime);
     if (err.length > 0) {
-      spinner.fail("Error saving reminder.");
-      err.forEach((e) => console.error("Error:", e.error));
+      spinner.fail("Error adding reminder.");
+      console.log(chalk.gray("~~~~~~~~~~~~~~~~~~~~~~~"));
+      err.forEach((e) => console.error(chalk.redBright("Error:", e.error)));
+      console.log(chalk.gray("~~~~~~~~~~~~~~~~~~~~~~~"));
       return;
     }
 
-    spinner.succeed(`Reminder set! Will notify in ${rawTime}.`);
-    mess.forEach((m) => console.log("--", m.message, "--"));
+    spinner.succeed(`Reminder set✅ Will notify in ${rawTime}.`);
+    console.log(chalk.gray("~~~~~~~~~~~~~~~~~~~~~~~"));
+    mess.forEach((m) => console.log(chalk.yellow("--"), m.message, chalk.yellow("--")));
+    console.log(chalk.gray("~~~~~~~~~~~~~~~~~~~~~~~"));
 
     schedule_reminder(message, duration);
   });
@@ -512,11 +518,11 @@ program
     setTimeout(() => {
       if (err.length === 0) {
         spinner.succeed("Request processed");
-        console.log("~~~~~~~~~~~~~~~~~~~~~~~");
+        console.log(chalk.gray("~~~~~~~~~~~~~~~~~~~~~~~"));
 
         if (reminders.length === 0) {
-          console.log("No reminders found");
-          console.log("~~~~~~~~~~~~~~~~~~~~~~~");
+          console.log(chalk.yellow("No reminders found"));
+          console.log(chalk.gray("~~~~~~~~~~~~~~~~~~~~~~~"));
           return;
         }
 
@@ -524,21 +530,22 @@ program
         reminders.forEach((reminder, index) => {
           // Add a separator when status changes
           if (currentStatus !== reminder.status) {
-            if (currentStatus !== null) {
-              console.log("~~~~~~~~~~~~~~~~~~~~~~~");
-            }
+              console.log(chalk.yellow("~~~~~~~~~~~~~~~~~~~~~~~"));
+            // if (currentStatus !== null) {
+            //   console.log(chalk.yellow("~~~~~~~~~~~~~~~~~~~~~~~"));
+            // }
             currentStatus = reminder.status;
             console.log(`📋 ${currentStatus.toUpperCase()} REMINDERS:`);
-            console.log("~~~~~~~~~~~~~~~~~~~~~~~");
+            console.log(chalk.yellow("~~~~~~~~~~~~~~~~~~~~~~~"));
           }
 
           const reminderTime = new Date(reminder.time);
           const timeStr = reminderTime.toLocaleString();
 
-          console.log(`ID: ${reminder.id}`);
-          console.log(`Message: ${reminder.message}`);
-          console.log(`Set for: ${timeStr}`);
-          console.log(`Set on: ${reminder.date} at ${reminder.setTime}`);
+          console.log(`ID: ${chalk.green(reminder.id)}`);
+          console.log(`Message: ${chalk.green(reminder.message)}`);
+          console.log(`Set for: ${chalk.green(timeStr)}`);
+          console.log(`Set on: ${chalk.green(reminder.date)} at ${chalk.green(reminder.setTime)}`);
 
           if (reminder.status === "completed") {
             console.log(
@@ -547,17 +554,17 @@ program
           }
 
           if (index < reminders.length - 1) {
-            console.log("-------------------");
+            console.log(chalk.gray("----------------------------------"));
           }
         });
         console.log("~~~~~~~~~~~~~~~~~~~~~~~");
       } else {
         spinner.fail("Error");
-        console.log("~~~~~~~~~~~~~~~~~~~~~~~");
+        console.log(chalk.gray("~~~~~~~~~~~~~~~~~~~~~~~"));
         err.forEach((item) => {
-          console.error("Error:", item.error);
+          console.error(chalk.redBright("Error:", item.error));
         });
-        console.log("~~~~~~~~~~~~~~~~~~~~~~~");
+        console.log(chalk.gray("~~~~~~~~~~~~~~~~~~~~~~~"));
       }
     }, 1000);
   });
@@ -590,7 +597,7 @@ program
 
     if (!id) {
       console.error("❌ Error: Reminder ID is required.");
-      console.log("Use `delete-reminder -h` for help.");
+      console.log(chalk.yellow("Use `delete-reminder -h` for help."));
       process.exit(1);
     }
 
@@ -600,19 +607,19 @@ program
     setTimeout(() => {
       if (err.length === 0) {
         spinner.succeed("Request processed");
-        console.log("~~~~~~~~~~~~~~~~~~~~~~~");
+        console.log(chalk.gray("~~~~~~~~~~~~~~~~~~~~~~~"));
         mess.forEach((item) => {
-          console.log("--", item.message, "--");
+          console.log(chalk.yellow("--"), item.message, chalk.yellow("--"));
         });
         console.log(`Reminder deleted successfully ✅`);
       } else {
         spinner.fail("Error");
-        console.log("~~~~~~~~~~~~~~~~~~~~~~~");
+        console.log(chalk.gray("~~~~~~~~~~~~~~~~~~~~~~~"));
         err.forEach((item) => {
-          console.error("Error:", item.error);
+          console.error(chalk.redBright("Error:", item.error));
         });
       }
-      console.log("~~~~~~~~~~~~~~~~~~~~~~~");
+      console.log(chalk.gray("~~~~~~~~~~~~~~~~~~~~~~~"));
     }, 1000);
   });
 
