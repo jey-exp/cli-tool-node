@@ -36,16 +36,16 @@ program
   .action((title, options) => {
     if (options.help || !title) {
       console.log("=========================================");
-      console.log("📝 Command: add-note");
-      console.log("-----------------------------------------");
-      console.log("📌 Usage:");
+      console.log(chalk.yellowBright("📝 Command: "), "add-note");
+      console.log(chalk.gray("-----------------------------------------"));
+      console.log(chalk.green("📌 Usage:"));
       console.log("  add-note `note title` [options]");
       console.log("");
-      console.log("🔧 Options:");
+      console.log(chalk.green("🔧 Options:"));
       console.log("  -b, --bullets     Add bullet points under the note");
       console.log("  -t, --tags        Add one or more tags to the note");
       console.log("");
-      console.log("💡 Example:");
+      console.log(chalk.green("💡 Example:"));
       console.log("  add-note `Octernships are on hold` ");
       console.log(
         "    --bullets `GitHub is not willing to continue octernships` "
@@ -57,7 +57,7 @@ program
     }
     if (!title) {
       console.error("❌ Error: Title is required to add a note.");
-      console.log("Use `add-note -h` for usage info.");
+      console.log(chalk.yellow("Use `add-note -h` for usage info."));
       process.exit(1);
     }
     const spinner = ora("Proccessing your request").start();
@@ -67,17 +67,17 @@ program
     setTimeout(() => {
       if (err.length == 0) {
         spinner.succeed("Request proccessed");
-        console.log("~~~~~~~~~~~~~~~~~~~~~~~");
+        console.log(chalk.gray("~~~~~~~~~~~~~~~~~~~~~~~"));
         mess.map((item) => {
-          console.log("--", item.message, "--");
+          console.log(chalk.yellow("--"), item.message, chalk.yellow("--"));
         });
         console.log("Note added successfully ✅");
 
-        console.log("~~~~~~~~~~~~~~~~~~~~~~~");
+        console.log(chalk.gray("~~~~~~~~~~~~~~~~~~~~~~~"));
       } else {
         spinner.fail("Error");
         err.map((item) => {
-          console.error("Error : ", item.error);
+          console.error(chalk.redBright("Error : ", item.error));
         });
       }
     }, 1000);
@@ -91,18 +91,18 @@ program
   .action((options) => {
     if (options.help) {
       console.log("=========================================");
-      console.log("📚 Command: ls-notes");
+      console.log(chalk.yellowBright("📚 Command: "),"ls-notes");
       console.log("-----------------------------------------");
-      console.log("📌 Usage:");
+      console.log(chalk.green("📌 Usage:"));
       console.log("  ls-notes [options]");
       console.log("");
-      console.log("🔧 Options:");
+      console.log(chalk.green("🔧 Options:"));
       console.log(
         "  -s, --sort [order]   Sort notes (asc or desc). Default is 'asc'"
       );
       console.log("  -t, --tag <tags...>  Filter notes by one or more tags");
       console.log("");
-      console.log("💡 Example:");
+      console.log(chalk.green("💡 Example:"));
       console.log("  ls-notes --sort desc --tag github internship");
       console.log("=========================================");
       return;
@@ -118,26 +118,25 @@ program
           console.log("--", item.message, "--");
         });
         res.map((item, index, array) => {
-          console.log("~~~~~~~~~~~~~~~~~~~~~~~");
-          console.log("Note title :", item.title);
-          console.log("Note's Id :", item.id);
-
+          console.log(chalk.gray("~~~~~~~~~~~~~~~~~~~~~~~"));
+          console.log(chalk.white("Note title :"), chalk.green(item.title));
+          console.log(chalk.white("Note's Id :"), chalk.green(item.id));
           if (item.bullets.length > 0) {
             console.log("Bulletins:-");
             item.bullets.map((item) => {
-              console.log("->", item);
+              console.log("->", chalk.green(item));
             });
           } else {
-            console.log("--No bulletins in this note--");
+            console.log(chalk.yellow("--No bulletins in this note--"));
           }
           if (index == array.length - 1) {
-            console.log("~~~~~~~~~~~~~~~~~~~~~~~");
+            console.log(chalk.gray("~~~~~~~~~~~~~~~~~~~~~~~"));
           }
         });
       } else {
         spinner.fail("Error");
         err.map((item) => {
-          console.error("Error : ", item.error);
+          console.error(chalk.redBright("Error : ", item.error));
         });
       }
     }, 1000);
@@ -150,23 +149,23 @@ program
   .action((id, options) => {
     if (options.help || !id) {
       console.log("=========================================");
-      console.log("🗑️ Command: delete-note");
+      console.log(chalk.yellowBright("🗑️ Command: "),"delete-note");
       console.log("-----------------------------------------");
-      console.log("📌 Usage:");
+      console.log(chalk.green("📌 Usage:"));
       console.log("  delete-note <id>");
       console.log("");
-      console.log("📝 Description:");
+      console.log(chalk.green("📝 Description:"));
       console.log("  Deletes the note with the given ID.");
       console.log("  You can find the ID using the `ls-notes` command.");
       console.log("");
-      console.log("💡 Example:");
+      console.log(chalk.green("💡 Example:"));
       console.log("  delete-note 12");
       console.log("=========================================");
       return;
     }
     if (!id) {
       console.error("❌ Error: Note ID is required.");
-      console.log("Use `delete-note -h` for help.");
+      console.log(chalk.yellow("Use `delete-note -h` for help."));
       process.exit(1);
     }
     const spinner = ora("Proccessing your request").start();
@@ -174,19 +173,19 @@ program
     setTimeout(() => {
       if (err.length == 0) {
         spinner.succeed("Request proccessed");
-        console.log("~~~~~~~~~~~~~~~~~~~~~~~");
+        console.log(chalk.gray("~~~~~~~~~~~~~~~~~~~~~~~"));
         mess.map((item) => {
           console.log("--", item.message, "--");
         });
         console.log(`Note with Id ${id} is deleted ✅`);
       } else {
         spinner.fail("Error");
-        console.log("~~~~~~~~~~~~~~~~~~~~~~~");
+        console.log(chalk.gray("~~~~~~~~~~~~~~~~~~~~~~~"));
         err.map((item) => {
-          console.error("Error: ", item.error);
+          console.error(chalk.redBright("Error: ", item.error));
         });
       }
-      console.log("~~~~~~~~~~~~~~~~~~~~~~~");
+      console.log(chalk.gray("~~~~~~~~~~~~~~~~~~~~~~~"));
     }, 1000);
   });
 
@@ -198,17 +197,17 @@ program
   .action((title, options) => {
     if (options.help || !title) {
       console.log("=========================================");
-      console.log("📝 Command: add-task");
+      console.log(chalk.yellowBright("📝 Command: "),"add-task");
       console.log("-----------------------------------------");
-      console.log("📌 Usage:");
+      console.log(chalk.green("📌 Usage:"));
       console.log("  add-task <title> [options]");
       console.log("");
-      console.log("🔧 Options:");
+      console.log(chalk.green("🔧 Options:"));
       console.log(
         "  -d, --description <desc...>  Optional description text for the task"
       );
       console.log("");
-      console.log("💡 Example:");
+      console.log(chalk.green("💡 Example:"));
       console.log("  add-task `Fix bug in auth module` ");
       console.log(
         "    --description `Occurs on login` `Happens when password is incorrect`"
@@ -218,7 +217,7 @@ program
     }
     if (!title) {
       console.error("❌ Error: Title is required to add a task.");
-      console.log("Use `add-task -h` for help.");
+      console.log(chalk.yellow("Use `add-task -h` for help."));
       process.exit(1);
     }
     const spinner = ora("Processing your request").start();
@@ -227,19 +226,19 @@ program
     setTimeout(() => {
       if (err.length == 0) {
         spinner.succeed("Request proccessed");
-        console.log("~~~~~~~~~~~~~~~~~~~~~~~");
+        console.log(chalk.gray("~~~~~~~~~~~~~~~~~~~~~~~"));
         mess.map((item) => {
-          console.log("--", item.message, "--");
+          console.log(chalk.yellow("--"), item.message, chalk.yellow("--"));
         });
         console.log("New task added successfully ✅");
       } else {
         spinner.fail("Error");
-        console.log("~~~~~~~~~~~~~~~~~~~~~~~");
+        console.log(chalk.gray("~~~~~~~~~~~~~~~~~~~~~~~"));
         err.map((item) => {
-          console.error("Error : ", item.error);
+          console.error(chalk.redBright("Error : ", item.error));
         });
       }
-      console.log("~~~~~~~~~~~~~~~~~~~~~~~");
+      console.log(chalk.gray("~~~~~~~~~~~~~~~~~~~~~~~"));
     }, 1000);
   });
 
@@ -249,17 +248,17 @@ program
   .action((options) => {
     if (options.help) {
       console.log("=========================================");
-      console.log("📋 Command: log-tasks");
+      console.log(chalk.yellowBright("📋 Command: "),"log-tasks");
       console.log("-----------------------------------------");
-      console.log("📌 Usage:");
+      console.log(chalk.green("📌 Usage:"));
       console.log("  log-tasks");
       console.log("");
-      console.log("📝 Description:");
+      console.log(chalk.green("📝 Description:"));
       console.log(
         "  Displays all the tasks that have been logged, along with their titles, IDs, and optional descriptions."
       );
       console.log("");
-      console.log("💡 Example:");
+      console.log(chalk.green("💡 Example:"));
       console.log("  log-tasks");
       console.log("=========================================");
       return;
@@ -269,32 +268,32 @@ program
     setTimeout(() => {
       if (err.length == 0) {
         spinner.succeed("Request proccessed");
-        console.log("~~~~~~~~~~~~~~~~~~~~~~~");
+        console.log(chalk.gray("~~~~~~~~~~~~~~~~~~~~~~~"));
         mess.forEach((item) => {
           console.log("--", item.message, "--");
         });
         res.map((item, index, array) => {
-          console.log("Task title :", item.title);
-          console.log("Task Id :", item.id);
+          console.log("Task title :", chalk.green(item.title));
+          console.log("Task Id :", chalk.green(item.id));
           if (item.description.length > 0) {
             console.log("Task notes :-");
             item.description.map((item) => {
-              console.log("->", item);
+              console.log("->", chalk.green(item));
             });
           } else {
-            console.log("--No description for this task--");
+            console.log(chalk.yellow("--This task doesn't contain description--"));
           }
           if (index === array.length - 1) {
-            console.log("~~~~~~~~~~~~~~~~~~~~~~~");
+            console.log(chalk.gray("~~~~~~~~~~~~~~~~~~~~~~~"));
           } else {
             console.log("");
           }
         });
       } else {
         spinner.fail("Error");
-        console.log("~~~~~~~~~~~~~~~~~~~~~~~");
+        console.log(chalk.gray("~~~~~~~~~~~~~~~~~~~~~~~"));
         err.forEach((item) => {
-          console.error("Error : ", item.error);
+          console.error(chalk.redBright("Error : ", item.error));
         });
       }
     }, 1000);
@@ -306,17 +305,17 @@ program
   .action((options) => {
     if (options.help) {
       console.log("=========================================");
-      console.log("📋 Command: ls-tasks");
+      console.log(chalk.yellowBright("📋 Command: "),"ls-tasks");
       console.log("-----------------------------------------");
-      console.log("📌 Usage:");
+      console.log(chalk.green("📌 Usage:"));
       console.log("  ls-tasks");
       console.log("");
-      console.log("📝 Description:");
+      console.log(chalk.green("📝 Description:"));
       console.log(
         "  Lists all pending tasks with their titles, IDs, and optional descriptions."
       );
       console.log("");
-      console.log("💡 Example:");
+      console.log(chalk.green("💡 Example:"));
       console.log("  ls-tasks");
       console.log("=========================================");
       return;
@@ -329,33 +328,33 @@ program
     setTimeout(() => {
       if (err.length == 0) {
         spinner.succeed("Request proccessed");
-        console.log("~~~~~~~~~~~~~~~~~~~~~~~");
+        console.log(chalk.gray("~~~~~~~~~~~~~~~~~~~~~~~"));
         mess.forEach((item) => {
-          console.log("--", item.message, "--");
+          console.log(chalk.yellow("--"), item.message, chalk.yellow("--"));
         });
         tasks_to_do.map((item, index, array) => {
-          console.log("Task title :", item.title);
-          console.log("Task Id :", item.id);
+          console.log("Task title :", chalk.green(item.title));
+          console.log("Task Id :", chalk.green(item.id));
           if (item.description.length > 0) {
             item.description.map((item) => {
-              console.log("->", item);
+              console.log("->", chalk.green(item));
             });
           } else {
-            console.log("--No description for task--");
+            console.log(chalk.yellow("--No description for task--"));
           }
           if (index == array.length - 1) {
-            console.log("~~~~~~~~~~~~~~~~~~~~~~~");
+            console.log(chalk.gray("~~~~~~~~~~~~~~~~~~~~~~~"));
           } else {
             console.log("");
           }
         });
       } else {
         spinner.fail("Error");
-        console.log("~~~~~~~~~~~~~~~~~~~~~~~");
+        console.log(chalk.gray("~~~~~~~~~~~~~~~~~~~~~~~"));
         err.forEach((item) => {
-          console.error(item.error);
+          console.error(chalk.redBright("Error : ",item.error));
         });
-        console.log("~~~~~~~~~~~~~~~~~~~~~~~");
+        console.log(chalk.gray("~~~~~~~~~~~~~~~~~~~~~~~"));
       }
     }, 1500);
   });
@@ -367,23 +366,23 @@ program
   .action((id, options) => {
     if (options.help || !id) {
       console.log("=========================================");
-      console.log("🗑️ Command: delete-task");
+      console.log(chalk.yellowBright("🗑️ Command: "),"delete-task");
       console.log("-----------------------------------------");
-      console.log("📌 Usage:");
+      console.log(chalk.green("📌 Usage:"));
       console.log("  delete-task <id>");
       console.log("");
-      console.log("📝 Description:");
+      console.log(chalk.green("📝 Description:"));
       console.log("  Deletes a task based on its ID.");
       console.log("  Use `ls-tasks` to view task IDs.");
       console.log("");
-      console.log("💡 Example:");
+      console.log(chalk.green("💡 Example:"));
       console.log("  delete-task 123abc");
       console.log("=========================================");
       return;
     }
     if (!id) {
       console.error("❌ Error: Id is required to delete a task.");
-      console.log("Use `delete-task -h` for help.");
+      console.log(chalk.yellow("Use `delete-task -h` for help."));
       process.exit(1);
     }
     const spinner = ora("Processing the request").start();
@@ -391,19 +390,19 @@ program
     setTimeout(() => {
       if (err.length == 0) {
         spinner.succeed("Request proccessed");
-        console.log("~~~~~~~~~~~~~~~~~~~~~~~");
+        console.log(chalk.gray("~~~~~~~~~~~~~~~~~~~~~~~"));
         mess.map((item) => {
-          console.log("--", item.message, "--");
+          console.log(chalk.yellow("--"), item.message, chalk.yellow("--"));
         });
         console.log("Task deleted successfully ✅");
       } else {
         spinner.fail("Error");
-        console.log("~~~~~~~~~~~~~~~~~~~~~~~");
+        console.log(chalk.gray("~~~~~~~~~~~~~~~~~~~~~~~"));
         err.map((item) => {
-          console.error("Error : ", item.error);
+          console.error(chalk.redBright("Error : ", item.error));
         });
       }
-      console.log("~~~~~~~~~~~~~~~~~~~~~~~");
+      console.log(chalk.gray("~~~~~~~~~~~~~~~~~~~~~~~"));
     }, 1000);
   });
 
@@ -414,23 +413,23 @@ program
   .action((id, options) => {
     if (options.help || !id) {
       console.log("=========================================");
-      console.log("✅ Command: task-done");
+      console.log(chalk.yellowBright("✅ Command: "),"task-done");
       console.log("-----------------------------------------");
-      console.log("📌 Usage:");
+      console.log(chalk.green("📌 Usage:"));
       console.log("  task-done <id>");
       console.log("");
-      console.log("📝 Description:");
+      console.log(chalk.green("📝 Description:"));
       console.log("  Marks the task with the given ID as complete.");
       console.log("  Use `ls-tasks` to see task IDs.");
       console.log("");
-      console.log("💡 Example:");
+      console.log(chalk.green("💡 Example:"));
       console.log("  task-done 12");
       console.log("=========================================");
       return;
     }
     if (!id) {
       console.error("❌ Error: Id is required to mark a task as completed.");
-      console.log("Use `task-done -h` for help.");
+      console.log(chalk.yellow("Use `task-done -h` for help."));
       process.exit(1);
     }
     const spinner = ora("Processing your request").start();
@@ -438,19 +437,19 @@ program
     setTimeout(() => {
       if (err.length == 0) {
         spinner.succeed("Request proccessed");
-        console.log("~~~~~~~~~~~~~~~~~~~~~~~");
+        console.log(chalk.gray("~~~~~~~~~~~~~~~~~~~~~~~"));
         mess.map((item) => {
-          console.log("--", item.message, "--");
+          console.log(chalk.yellow("--"), item.message, chalk.yellow("--"));
         });
         console.log(`Task (Id:${id}) marked as complete ✅`);
       } else {
         spinner.fail("Error");
-        console.log("~~~~~~~~~~~~~~~~~~~~~~~");
+        console.log(chalk.gray("~~~~~~~~~~~~~~~~~~~~~~~"));
         err.map((item) => {
-          console.error("Error : ", item.error);
+          console.error(chalk.redBright("Error : ", item.error));
         });
       }
-      console.log("~~~~~~~~~~~~~~~~~~~~~~~");
+      console.log(chalk.gray("~~~~~~~~~~~~~~~~~~~~~~~"));
     }, 1000);
   });
 
@@ -463,10 +462,12 @@ program
     const spinner = ora("Scheduling your reminder...").start();
     const rawTime = options.after;
     const duration = ms(rawTime);
-
+    
     if (!duration || duration > ms("2d")) {
       spinner.fail("❌ Invalid duration. Max allowed: 2 days.");
-      console.log("Examples: --after 10m, --after 2h");
+      console.log(chalk.gray("~~~~~~~~~~~~~~~~~~~~~~~"));
+      console.log(chalk.yellow("Examples: --after 10m, --after 2h"));
+      console.log(chalk.gray("~~~~~~~~~~~~~~~~~~~~~~~"));
       return;
     }
 
@@ -474,13 +475,17 @@ program
 
     const { err, mess } = add_reminder(message, fireTime);
     if (err.length > 0) {
-      spinner.fail("Error saving reminder.");
-      err.forEach((e) => console.error("Error:", e.error));
+      spinner.fail("Error adding reminder.");
+      console.log(chalk.gray("~~~~~~~~~~~~~~~~~~~~~~~"));
+      err.forEach((e) => console.error(chalk.redBright("Error:", e.error)));
+      console.log(chalk.gray("~~~~~~~~~~~~~~~~~~~~~~~"));
       return;
     }
 
-    spinner.succeed(`Reminder set! Will notify in ${rawTime}.`);
-    mess.forEach((m) => console.log("--", m.message, "--"));
+    spinner.succeed(`Reminder set✅ Will notify in ${rawTime}.`);
+    console.log(chalk.gray("~~~~~~~~~~~~~~~~~~~~~~~"));
+    mess.forEach((m) => console.log(chalk.yellow("--"), m.message, chalk.yellow("--")));
+    console.log(chalk.gray("~~~~~~~~~~~~~~~~~~~~~~~"));
 
     schedule_reminder(message, duration);
   });
@@ -492,16 +497,16 @@ program
   .action((options) => {
     if (options.help) {
       console.log("=========================================");
-      console.log("⏰ Command: view-reminders");
+      console.log(chalk.yellowBright("⏰ Command: "),"view-reminders");
       console.log("-----------------------------------------");
-      console.log("📌 Usage:");
+      console.log(chalk.green("📌 Usage:"));
       console.log("  view-reminders");
       console.log("");
-      console.log("📝 Description:");
+      console.log(chalk.green("📝 Description:"));
       console.log("  Shows all reminders, with pending reminders listed first");
       console.log("  followed by completed ones.");
       console.log("");
-      console.log("💡 Example:");
+      console.log(chalk.green("💡 Example:"));
       console.log("  view-reminders");
       console.log("=========================================");
       return;
@@ -513,11 +518,11 @@ program
     setTimeout(() => {
       if (err.length === 0) {
         spinner.succeed("Request processed");
-        console.log("~~~~~~~~~~~~~~~~~~~~~~~");
+        console.log(chalk.gray("~~~~~~~~~~~~~~~~~~~~~~~"));
 
         if (reminders.length === 0) {
-          console.log("No reminders found");
-          console.log("~~~~~~~~~~~~~~~~~~~~~~~");
+          console.log(chalk.yellow("No reminders found"));
+          console.log(chalk.gray("~~~~~~~~~~~~~~~~~~~~~~~"));
           return;
         }
 
@@ -525,21 +530,19 @@ program
         reminders.forEach((reminder, index) => {
           // Add a separator when status changes
           if (currentStatus !== reminder.status) {
-            if (currentStatus !== null) {
-              console.log("~~~~~~~~~~~~~~~~~~~~~~~");
-            }
+              console.log(chalk.yellow("~~~~~~~~~~~~~~~~~~~~~~~"));
             currentStatus = reminder.status;
             console.log(`📋 ${currentStatus.toUpperCase()} REMINDERS:`);
-            console.log("~~~~~~~~~~~~~~~~~~~~~~~");
+            console.log(chalk.yellow("~~~~~~~~~~~~~~~~~~~~~~~"));
           }
 
           const reminderTime = new Date(reminder.time);
           const timeStr = reminderTime.toLocaleString();
 
-          console.log(`ID: ${reminder.id}`);
-          console.log(`Message: ${reminder.message}`);
-          console.log(`Set for: ${timeStr}`);
-          console.log(`Set on: ${reminder.date} at ${reminder.setTime}`);
+          console.log(`ID: ${chalk.green(reminder.id)}`);
+          console.log(`Message: ${chalk.green(reminder.message)}`);
+          console.log(`Set for: ${chalk.green(timeStr)}`);
+          console.log(`Set on: ${chalk.green(reminder.date)} at ${chalk.green(reminder.setTime)}`);
 
           if (reminder.status === "completed") {
             console.log(
@@ -548,17 +551,17 @@ program
           }
 
           if (index < reminders.length - 1) {
-            console.log("-------------------");
+            console.log(chalk.gray("----------------------------------"));
           }
         });
         console.log("~~~~~~~~~~~~~~~~~~~~~~~");
       } else {
         spinner.fail("Error");
-        console.log("~~~~~~~~~~~~~~~~~~~~~~~");
+        console.log(chalk.gray("~~~~~~~~~~~~~~~~~~~~~~~"));
         err.forEach((item) => {
-          console.error("Error:", item.error);
+          console.error(chalk.redBright("Error:", item.error));
         });
-        console.log("~~~~~~~~~~~~~~~~~~~~~~~");
+        console.log(chalk.gray("~~~~~~~~~~~~~~~~~~~~~~~"));
       }
     }, 1000);
   });
@@ -574,16 +577,16 @@ program
   .action((id, options) => {
     if (options.help || !id) {
       console.log("=========================================");
-      console.log("🗑️ Command: delete-reminder");
+      console.log(chalk.yellowBright("🗑️ Command: delete-reminder"));
       console.log("-----------------------------------------");
-      console.log("📌 Usage:");
+      console.log(chalk.green("📌 Usage:"));
       console.log("  delete-reminder <id>");
       console.log("");
-      console.log("📝 Description:");
+      console.log(chalk.green("📝 Description:"));
       console.log("  Deletes the reminder with the specified ID.");
       console.log("  You can find the ID using the `view-reminders` command.");
       console.log("");
-      console.log("💡 Example:");
+      console.log(chalk.green("💡 Example:"));
       console.log("  delete-reminder 3");
       console.log("=========================================");
       return;
@@ -591,7 +594,7 @@ program
 
     if (!id) {
       console.error("❌ Error: Reminder ID is required.");
-      console.log("Use `delete-reminder -h` for help.");
+      console.log(chalk.yellow("Use `delete-reminder -h` for help."));
       process.exit(1);
     }
 
@@ -601,19 +604,19 @@ program
     setTimeout(() => {
       if (err.length === 0) {
         spinner.succeed("Request processed");
-        console.log("~~~~~~~~~~~~~~~~~~~~~~~");
+        console.log(chalk.gray("~~~~~~~~~~~~~~~~~~~~~~~"));
         mess.forEach((item) => {
-          console.log("--", item.message, "--");
+          console.log(chalk.yellow("--"), item.message, chalk.yellow("--"));
         });
         console.log(`Reminder deleted successfully ✅`);
       } else {
         spinner.fail("Error");
-        console.log("~~~~~~~~~~~~~~~~~~~~~~~");
+        console.log(chalk.gray("~~~~~~~~~~~~~~~~~~~~~~~"));
         err.forEach((item) => {
-          console.error("Error:", item.error);
+          console.error(chalk.redBright("Error:", item.error));
         });
       }
-      console.log("~~~~~~~~~~~~~~~~~~~~~~~");
+      console.log(chalk.gray("~~~~~~~~~~~~~~~~~~~~~~~"));
     }, 1000);
   });
 

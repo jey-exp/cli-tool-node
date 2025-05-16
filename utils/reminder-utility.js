@@ -134,9 +134,6 @@ const delete_reminder = (id) => {
     }
 
     writeFile(reminders);
-    mess.push({
-      message: `Reminder with ID ${reminderId} deleted successfully.`,
-    });
     return { err, mess };
   } catch (error) {
     err.push({ error: error.message });
