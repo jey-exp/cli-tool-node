@@ -217,7 +217,7 @@ program
     }
     if (!title) {
       console.error("❌ Error: Title is required to add a task.");
-      console.log("Use `add-task -h` for help.");
+      console.log(chalk.yellow("Use `add-task -h` for help."));
       process.exit(1);
     }
     const spinner = ora("Processing your request").start();
@@ -226,19 +226,19 @@ program
     setTimeout(() => {
       if (err.length == 0) {
         spinner.succeed("Request proccessed");
-        console.log("~~~~~~~~~~~~~~~~~~~~~~~");
+        console.log(chalk.gray("~~~~~~~~~~~~~~~~~~~~~~~"));
         mess.map((item) => {
-          console.log("--", item.message, "--");
+          console.log(chalk.yellow("--"), item.message, chalk.yellow("--"));
         });
         console.log("New task added successfully ✅");
       } else {
         spinner.fail("Error");
-        console.log("~~~~~~~~~~~~~~~~~~~~~~~");
+        console.log(chalk.gray("~~~~~~~~~~~~~~~~~~~~~~~"));
         err.map((item) => {
-          console.error("Error : ", item.error);
+          console.error(chalk.redBright("Error : ", item.error));
         });
       }
-      console.log("~~~~~~~~~~~~~~~~~~~~~~~");
+      console.log(chalk.gray("~~~~~~~~~~~~~~~~~~~~~~~"));
     }, 1000);
   });
 
@@ -268,32 +268,32 @@ program
     setTimeout(() => {
       if (err.length == 0) {
         spinner.succeed("Request proccessed");
-        console.log("~~~~~~~~~~~~~~~~~~~~~~~");
+        console.log(chalk.gray("~~~~~~~~~~~~~~~~~~~~~~~"));
         mess.forEach((item) => {
           console.log("--", item.message, "--");
         });
         res.map((item, index, array) => {
-          console.log("Task title :", item.title);
-          console.log("Task Id :", item.id);
+          console.log("Task title :", chalk.green(item.title));
+          console.log("Task Id :", chalk.green(item.id));
           if (item.description.length > 0) {
             console.log("Task notes :-");
             item.description.map((item) => {
-              console.log("->", item);
+              console.log("->", chalk.green(item));
             });
           } else {
-            console.log("--No description for this task--");
+            console.log(chalk.yellow("--This task doesn't contain description--"));
           }
           if (index === array.length - 1) {
-            console.log("~~~~~~~~~~~~~~~~~~~~~~~");
+            console.log(chalk.gray("~~~~~~~~~~~~~~~~~~~~~~~"));
           } else {
             console.log("");
           }
         });
       } else {
         spinner.fail("Error");
-        console.log("~~~~~~~~~~~~~~~~~~~~~~~");
+        console.log(chalk.gray("~~~~~~~~~~~~~~~~~~~~~~~"));
         err.forEach((item) => {
-          console.error("Error : ", item.error);
+          console.error(chalk.redBright("Error : ", item.error));
         });
       }
     }, 1000);
@@ -328,33 +328,33 @@ program
     setTimeout(() => {
       if (err.length == 0) {
         spinner.succeed("Request proccessed");
-        console.log("~~~~~~~~~~~~~~~~~~~~~~~");
+        console.log(chalk.gray("~~~~~~~~~~~~~~~~~~~~~~~"));
         mess.forEach((item) => {
-          console.log("--", item.message, "--");
+          console.log(chalk.yellow("--"), item.message, chalk.yellow("--"));
         });
         tasks_to_do.map((item, index, array) => {
-          console.log("Task title :", item.title);
-          console.log("Task Id :", item.id);
+          console.log("Task title :", chalk.green(item.title));
+          console.log("Task Id :", chalk.green(item.id));
           if (item.description.length > 0) {
             item.description.map((item) => {
-              console.log("->", item);
+              console.log("->", chalk.green(item));
             });
           } else {
-            console.log("--No description for task--");
+            console.log(chalk.yellow("--No description for task--"));
           }
           if (index == array.length - 1) {
-            console.log("~~~~~~~~~~~~~~~~~~~~~~~");
+            console.log(chalk.gray("~~~~~~~~~~~~~~~~~~~~~~~"));
           } else {
             console.log("");
           }
         });
       } else {
         spinner.fail("Error");
-        console.log("~~~~~~~~~~~~~~~~~~~~~~~");
+        console.log(chalk.gray("~~~~~~~~~~~~~~~~~~~~~~~"));
         err.forEach((item) => {
-          console.error(item.error);
+          console.error(chalk.redBright("Error : ",item.error));
         });
-        console.log("~~~~~~~~~~~~~~~~~~~~~~~");
+        console.log(chalk.gray("~~~~~~~~~~~~~~~~~~~~~~~"));
       }
     }, 1500);
   });
@@ -382,7 +382,7 @@ program
     }
     if (!id) {
       console.error("❌ Error: Id is required to delete a task.");
-      console.log("Use `delete-task -h` for help.");
+      console.log(chalk.yellow("Use `delete-task -h` for help."));
       process.exit(1);
     }
     const spinner = ora("Processing the request").start();
@@ -390,19 +390,19 @@ program
     setTimeout(() => {
       if (err.length == 0) {
         spinner.succeed("Request proccessed");
-        console.log("~~~~~~~~~~~~~~~~~~~~~~~");
+        console.log(chalk.gray("~~~~~~~~~~~~~~~~~~~~~~~"));
         mess.map((item) => {
-          console.log("--", item.message, "--");
+          console.log(chalk.yellow("--"), item.message, chalk.yellow("--"));
         });
         console.log("Task deleted successfully ✅");
       } else {
         spinner.fail("Error");
-        console.log("~~~~~~~~~~~~~~~~~~~~~~~");
+        console.log(chalk.gray("~~~~~~~~~~~~~~~~~~~~~~~"));
         err.map((item) => {
-          console.error("Error : ", item.error);
+          console.error(chalk.redBright("Error : ", item.error));
         });
       }
-      console.log("~~~~~~~~~~~~~~~~~~~~~~~");
+      console.log(chalk.gray("~~~~~~~~~~~~~~~~~~~~~~~"));
     }, 1000);
   });
 
@@ -429,7 +429,7 @@ program
     }
     if (!id) {
       console.error("❌ Error: Id is required to mark a task as completed.");
-      console.log("Use `task-done -h` for help.");
+      console.log(chalk.yellow("Use `task-done -h` for help."));
       process.exit(1);
     }
     const spinner = ora("Processing your request").start();
@@ -437,19 +437,19 @@ program
     setTimeout(() => {
       if (err.length == 0) {
         spinner.succeed("Request proccessed");
-        console.log("~~~~~~~~~~~~~~~~~~~~~~~");
+        console.log(chalk.gray("~~~~~~~~~~~~~~~~~~~~~~~"));
         mess.map((item) => {
-          console.log("--", item.message, "--");
+          console.log(chalk.yellow("--"), item.message, chalk.yellow("--"));
         });
         console.log(`Task (Id:${id}) marked as complete ✅`);
       } else {
         spinner.fail("Error");
-        console.log("~~~~~~~~~~~~~~~~~~~~~~~");
+        console.log(chalk.gray("~~~~~~~~~~~~~~~~~~~~~~~"));
         err.map((item) => {
-          console.error("Error : ", item.error);
+          console.error(chalk.redBright("Error : ", item.error));
         });
       }
-      console.log("~~~~~~~~~~~~~~~~~~~~~~~");
+      console.log(chalk.gray("~~~~~~~~~~~~~~~~~~~~~~~"));
     }, 1000);
   });
 
