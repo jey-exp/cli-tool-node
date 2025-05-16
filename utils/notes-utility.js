@@ -90,11 +90,15 @@ const delete_note = (id) => {
           err.push({ error: `Note with id ${id} is already deleted` });
           return;
         }
+        mess.push({ message: `Note with Id ${id} found!.` });
         element.status = "deleted";
         return;
       }
     });
-    if (err.length == 0) {
+    if (err.length == 0 && mess.length == 0) {
+      err.push({ error: `Note with ID ${id} not found.` });
+    }
+    else if(mess.length > 0){
       writeFile(file_content);
     }
     return { err, mess };
