@@ -57,7 +57,7 @@ program
     }
     if (!title) {
       console.error("❌ Error: Title is required to add a note.");
-      console.log("Use `add-note -h` for usage info.");
+      console.log(chalk.yellow("Use `add-note -h` for usage info."));
       process.exit(1);
     }
     const spinner = ora("Proccessing your request").start();
@@ -67,17 +67,17 @@ program
     setTimeout(() => {
       if (err.length == 0) {
         spinner.succeed("Request proccessed");
-        console.log("~~~~~~~~~~~~~~~~~~~~~~~");
+        console.log(chalk.gray("~~~~~~~~~~~~~~~~~~~~~~~"));
         mess.map((item) => {
-          console.log("--", item.message, "--");
+          console.log(chalk.yellow("--"), item.message, chalk.yellow("--"));
         });
         console.log("Note added successfully ✅");
 
-        console.log("~~~~~~~~~~~~~~~~~~~~~~~");
+        console.log(chalk.gray("~~~~~~~~~~~~~~~~~~~~~~~"));
       } else {
         spinner.fail("Error");
         err.map((item) => {
-          console.error("Error : ", item.error);
+          console.error(chalk.redBright("Error : ", item.error));
         });
       }
     }, 1000);
@@ -118,26 +118,25 @@ program
           console.log("--", item.message, "--");
         });
         res.map((item, index, array) => {
-          console.log("~~~~~~~~~~~~~~~~~~~~~~~");
-          console.log("Note title :", item.title);
-          console.log("Note's Id :", item.id);
-
+          console.log(chalk.gray("~~~~~~~~~~~~~~~~~~~~~~~"));
+          console.log(chalk.white("Note title :"), chalk.green(item.title));
+          console.log(chalk.white("Note's Id :"), chalk.green(item.id));
           if (item.bullets.length > 0) {
             console.log("Bulletins:-");
             item.bullets.map((item) => {
-              console.log("->", item);
+              console.log("->", chalk.green(item));
             });
           } else {
-            console.log("--No bulletins in this note--");
+            console.log(chalk.yellow("--No bulletins in this note--"));
           }
           if (index == array.length - 1) {
-            console.log("~~~~~~~~~~~~~~~~~~~~~~~");
+            console.log(chalk.gray("~~~~~~~~~~~~~~~~~~~~~~~"));
           }
         });
       } else {
         spinner.fail("Error");
         err.map((item) => {
-          console.error("Error : ", item.error);
+          console.error(chalk.redBright("Error : ", item.error));
         });
       }
     }, 1000);
@@ -166,7 +165,7 @@ program
     }
     if (!id) {
       console.error("❌ Error: Note ID is required.");
-      console.log("Use `delete-note -h` for help.");
+      console.log(chalk.yellow("Use `delete-note -h` for help."));
       process.exit(1);
     }
     const spinner = ora("Proccessing your request").start();
@@ -174,19 +173,19 @@ program
     setTimeout(() => {
       if (err.length == 0) {
         spinner.succeed("Request proccessed");
-        console.log("~~~~~~~~~~~~~~~~~~~~~~~");
+        console.log(chalk.gray("~~~~~~~~~~~~~~~~~~~~~~~"));
         mess.map((item) => {
           console.log("--", item.message, "--");
         });
         console.log(`Note with Id ${id} is deleted ✅`);
       } else {
         spinner.fail("Error");
-        console.log("~~~~~~~~~~~~~~~~~~~~~~~");
+        console.log(chalk.gray("~~~~~~~~~~~~~~~~~~~~~~~"));
         err.map((item) => {
-          console.error("Error: ", item.error);
+          console.error(chalk.redBright("Error: ", item.error));
         });
       }
-      console.log("~~~~~~~~~~~~~~~~~~~~~~~");
+      console.log(chalk.gray("~~~~~~~~~~~~~~~~~~~~~~~"));
     }, 1000);
   });
 
