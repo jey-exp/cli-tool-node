@@ -36,16 +36,16 @@ program
   .action((title, options) => {
     if (options.help || !title) {
       console.log("=========================================");
-      console.log("📝 Command: add-note");
-      console.log("-----------------------------------------");
-      console.log("📌 Usage:");
+      console.log(chalk.yellowBright("📝 Command: "), "add-note");
+      console.log(chalk.gray("-----------------------------------------"));
+      console.log(chalk.green("📌 Usage:"));
       console.log("  add-note `note title` [options]");
       console.log("");
-      console.log("🔧 Options:");
+      console.log(chalk.green("🔧 Options:"));
       console.log("  -b, --bullets     Add bullet points under the note");
       console.log("  -t, --tags        Add one or more tags to the note");
       console.log("");
-      console.log("💡 Example:");
+      console.log(chalk.green("💡 Example:"));
       console.log("  add-note `Octernships are on hold` ");
       console.log(
         "    --bullets `GitHub is not willing to continue octernships` "
@@ -91,18 +91,18 @@ program
   .action((options) => {
     if (options.help) {
       console.log("=========================================");
-      console.log("📚 Command: ls-notes");
+      console.log(chalk.yellowBright("📚 Command: "),"ls-notes");
       console.log("-----------------------------------------");
-      console.log("📌 Usage:");
+      console.log(chalk.green("📌 Usage:"));
       console.log("  ls-notes [options]");
       console.log("");
-      console.log("🔧 Options:");
+      console.log(chalk.green("🔧 Options:"));
       console.log(
         "  -s, --sort [order]   Sort notes (asc or desc). Default is 'asc'"
       );
       console.log("  -t, --tag <tags...>  Filter notes by one or more tags");
       console.log("");
-      console.log("💡 Example:");
+      console.log(chalk.green("💡 Example:"));
       console.log("  ls-notes --sort desc --tag github internship");
       console.log("=========================================");
       return;
@@ -149,16 +149,16 @@ program
   .action((id, options) => {
     if (options.help || !id) {
       console.log("=========================================");
-      console.log("🗑️ Command: delete-note");
+      console.log(chalk.yellowBright("🗑️ Command: "),"delete-note");
       console.log("-----------------------------------------");
-      console.log("📌 Usage:");
+      console.log(chalk.green("📌 Usage:"));
       console.log("  delete-note <id>");
       console.log("");
-      console.log("📝 Description:");
+      console.log(chalk.green("📝 Description:"));
       console.log("  Deletes the note with the given ID.");
       console.log("  You can find the ID using the `ls-notes` command.");
       console.log("");
-      console.log("💡 Example:");
+      console.log(chalk.green("💡 Example:"));
       console.log("  delete-note 12");
       console.log("=========================================");
       return;
@@ -197,17 +197,17 @@ program
   .action((title, options) => {
     if (options.help || !title) {
       console.log("=========================================");
-      console.log("📝 Command: add-task");
+      console.log(chalk.yellowBright("📝 Command: "),"add-task");
       console.log("-----------------------------------------");
-      console.log("📌 Usage:");
+      console.log(chalk.green("📌 Usage:"));
       console.log("  add-task <title> [options]");
       console.log("");
-      console.log("🔧 Options:");
+      console.log(chalk.green("🔧 Options:"));
       console.log(
         "  -d, --description <desc...>  Optional description text for the task"
       );
       console.log("");
-      console.log("💡 Example:");
+      console.log(chalk.green("💡 Example:"));
       console.log("  add-task `Fix bug in auth module` ");
       console.log(
         "    --description `Occurs on login` `Happens when password is incorrect`"
@@ -248,17 +248,17 @@ program
   .action((options) => {
     if (options.help) {
       console.log("=========================================");
-      console.log("📋 Command: log-tasks");
+      console.log(chalk.yellowBright("📋 Command: "),"log-tasks");
       console.log("-----------------------------------------");
-      console.log("📌 Usage:");
+      console.log(chalk.green("📌 Usage:"));
       console.log("  log-tasks");
       console.log("");
-      console.log("📝 Description:");
+      console.log(chalk.green("📝 Description:"));
       console.log(
         "  Displays all the tasks that have been logged, along with their titles, IDs, and optional descriptions."
       );
       console.log("");
-      console.log("💡 Example:");
+      console.log(chalk.green("💡 Example:"));
       console.log("  log-tasks");
       console.log("=========================================");
       return;
@@ -305,17 +305,17 @@ program
   .action((options) => {
     if (options.help) {
       console.log("=========================================");
-      console.log("📋 Command: ls-tasks");
+      console.log(chalk.yellowBright("📋 Command: "),"ls-tasks");
       console.log("-----------------------------------------");
-      console.log("📌 Usage:");
+      console.log(chalk.green("📌 Usage:"));
       console.log("  ls-tasks");
       console.log("");
-      console.log("📝 Description:");
+      console.log(chalk.green("📝 Description:"));
       console.log(
         "  Lists all pending tasks with their titles, IDs, and optional descriptions."
       );
       console.log("");
-      console.log("💡 Example:");
+      console.log(chalk.green("💡 Example:"));
       console.log("  ls-tasks");
       console.log("=========================================");
       return;
@@ -366,16 +366,16 @@ program
   .action((id, options) => {
     if (options.help || !id) {
       console.log("=========================================");
-      console.log("🗑️ Command: delete-task");
+      console.log(chalk.yellowBright("🗑️ Command: "),"delete-task");
       console.log("-----------------------------------------");
-      console.log("📌 Usage:");
+      console.log(chalk.green("📌 Usage:"));
       console.log("  delete-task <id>");
       console.log("");
-      console.log("📝 Description:");
+      console.log(chalk.green("📝 Description:"));
       console.log("  Deletes a task based on its ID.");
       console.log("  Use `ls-tasks` to view task IDs.");
       console.log("");
-      console.log("💡 Example:");
+      console.log(chalk.green("💡 Example:"));
       console.log("  delete-task 123abc");
       console.log("=========================================");
       return;
@@ -413,16 +413,16 @@ program
   .action((id, options) => {
     if (options.help || !id) {
       console.log("=========================================");
-      console.log("✅ Command: task-done");
+      console.log(chalk.yellowBright("✅ Command: "),"task-done");
       console.log("-----------------------------------------");
-      console.log("📌 Usage:");
+      console.log(chalk.green("📌 Usage:"));
       console.log("  task-done <id>");
       console.log("");
-      console.log("📝 Description:");
+      console.log(chalk.green("📝 Description:"));
       console.log("  Marks the task with the given ID as complete.");
       console.log("  Use `ls-tasks` to see task IDs.");
       console.log("");
-      console.log("💡 Example:");
+      console.log(chalk.green("💡 Example:"));
       console.log("  task-done 12");
       console.log("=========================================");
       return;
@@ -497,16 +497,16 @@ program
   .action((options) => {
     if (options.help) {
       console.log("=========================================");
-      console.log("⏰ Command: view-reminders");
+      console.log(chalk.yellowBright("⏰ Command: "),"view-reminders");
       console.log("-----------------------------------------");
-      console.log("📌 Usage:");
+      console.log(chalk.green("📌 Usage:"));
       console.log("  view-reminders");
       console.log("");
-      console.log("📝 Description:");
+      console.log(chalk.green("📝 Description:"));
       console.log("  Shows all reminders, with pending reminders listed first");
       console.log("  followed by completed ones.");
       console.log("");
-      console.log("💡 Example:");
+      console.log(chalk.green("💡 Example:"));
       console.log("  view-reminders");
       console.log("=========================================");
       return;
@@ -531,9 +531,6 @@ program
           // Add a separator when status changes
           if (currentStatus !== reminder.status) {
               console.log(chalk.yellow("~~~~~~~~~~~~~~~~~~~~~~~"));
-            // if (currentStatus !== null) {
-            //   console.log(chalk.yellow("~~~~~~~~~~~~~~~~~~~~~~~"));
-            // }
             currentStatus = reminder.status;
             console.log(`📋 ${currentStatus.toUpperCase()} REMINDERS:`);
             console.log(chalk.yellow("~~~~~~~~~~~~~~~~~~~~~~~"));
@@ -580,16 +577,16 @@ program
   .action((id, options) => {
     if (options.help || !id) {
       console.log("=========================================");
-      console.log("🗑️ Command: delete-reminder");
+      console.log(chalk.yellowBright("🗑️ Command: delete-reminder"));
       console.log("-----------------------------------------");
-      console.log("📌 Usage:");
+      console.log(chalk.green("📌 Usage:"));
       console.log("  delete-reminder <id>");
       console.log("");
-      console.log("📝 Description:");
+      console.log(chalk.green("📝 Description:"));
       console.log("  Deletes the reminder with the specified ID.");
       console.log("  You can find the ID using the `view-reminders` command.");
       console.log("");
-      console.log("💡 Example:");
+      console.log(chalk.green("💡 Example:"));
       console.log("  delete-reminder 3");
       console.log("=========================================");
       return;
