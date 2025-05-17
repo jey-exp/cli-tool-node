@@ -456,9 +456,41 @@ program
 program
   .command("set-reminder")
   .description("Set a reminder that notifies after given time")
-  .argument("<message>", "Reminder message")
-  .option("--after <duration>", "When to remind (e.g., 10m, 2h, 1d)")
+  .argument("[message]", "Reminder message")
+  .option("--after [duration]", "When to remind (e.g., 10m, 2h, 1d)")
+  .option("-h --help", "Show help for set-reminder")
   .action((message, options) => {
+    if(options.help){
+      console.log("=========================================");
+      console.log(chalk.yellowBright("✅ Command: "),"set-reminder");
+      console.log("-----------------------------------------");
+      console.log(chalk.green("📌 Usage:"));
+      console.log("  set-reminder <message> --after <duration>");
+      console.log("");
+      console.log(chalk.green("📝 Description:"));
+      console.log("  Adds a new reminder after specified time.");
+      console.log("");
+      console.log(chalk.green("💡 Example:"));
+      console.log("  set-reminder `Meeting with team` --after 10m");
+      console.log("=========================================");
+      return;
+    }
+    
+    if(!message && !options.after) {
+      console.error("❌ Error: message, duration is required to add a reminder");
+      console.log(chalk.yellow("Use `set-reminder --help` for help."));
+      process.exit(1);
+    }
+    else if(!message){
+      console.error("❌ Error: message is required to add a reminder");
+      console.log(chalk.yellow("Use `set-reminder --help` for help."));
+      process.exit(1);
+    }
+    else if(!options.after){
+      console.error("❌ Error: duration is required to add a reminder");
+      console.log(chalk.yellow("Use `set-reminder --help` for help."));
+      process.exit(1);
+    }
     const spinner = ora("Scheduling your reminder...").start();
     const rawTime = options.after;
     const duration = ms(rawTime);
