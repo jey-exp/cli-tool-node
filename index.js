@@ -39,11 +39,16 @@ program
       console.log(chalk.yellowBright("📝 Command: "), "add-note");
       console.log(chalk.gray("-----------------------------------------"));
       console.log(chalk.green("📌 Usage:"));
-      console.log("  add-note `note title` [options]");
+      console.log("  add-note <title> [options]");
+      console.log(chalk.cyan("          (`title` is required)"));
       console.log("");
       console.log(chalk.green("🔧 Options:"));
       console.log("  -b, --bullets     Add bullet points under the note");
+      console.log(chalk.cyan("                    (Accepts multiple bullet points)"));
+      console.log(chalk.cyan("                    (Alteast one bullet point is required)"));
       console.log("  -t, --tags        Add one or more tags to the note");
+      console.log(chalk.cyan("                    (Accepts multiple tags)"));
+      console.log(chalk.cyan("                    (Atleast one tag is required)"));
       console.log("");
       console.log(chalk.green("💡 Example:"));
       console.log("  add-note `Octernships are on hold` ");
@@ -102,6 +107,8 @@ program
         "  -s, --sort [order]   Sort notes (asc or desc). Default is 'asc'"
       );
       console.log("  -t, --tag <tags...>  Filter notes by one or more tags");
+      console.log(chalk.cyan("      (Accepts multiple tags)"));
+      console.log(chalk.cyan("      (Atleast one tag is required)"));
       console.log("");
       console.log(chalk.green("💡 Example:"));
       console.log("  ls-notes --sort desc --tag github internship");
@@ -155,6 +162,7 @@ program
       console.log("-----------------------------------------");
       console.log(chalk.green("📌 Usage:"));
       console.log("  delete-note <id>");
+      console.log(chalk.cyan("              (note's id is required)"));
       console.log("");
       console.log(chalk.green("📝 Description:"));
       console.log("  Deletes the note with the given ID.");
@@ -204,11 +212,14 @@ program
       console.log("-----------------------------------------");
       console.log(chalk.green("📌 Usage:"));
       console.log("  add-task <title> [options]");
+      console.log(chalk.cyan("           (title is required)"));
       console.log("");
       console.log(chalk.green("🔧 Options:"));
       console.log(
         "  -d, --description <desc...>  Optional description text for the task"
       );
+      console.log(chalk.cyan("        (description accepts multiple points)"));
+      console.log(chalk.cyan("        (atleast one description is required)"));
       console.log("");
       console.log(chalk.green("💡 Example:"));
       console.log("  add-task `Fix bug in auth module` ");
@@ -376,13 +387,14 @@ program
       console.log("-----------------------------------------");
       console.log(chalk.green("📌 Usage:"));
       console.log("  delete-task <id>");
+      console.log(chalk.cyan("              (task's Id is required)"));
       console.log("");
       console.log(chalk.green("📝 Description:"));
       console.log("  Deletes a task based on its ID.");
       console.log("  Use `ls-tasks` to view task IDs.");
       console.log("");
       console.log(chalk.green("💡 Example:"));
-      console.log("  delete-task 123abc");
+      console.log("  delete-task 12");
       console.log("=========================================");
       return;
     }
@@ -424,6 +436,7 @@ program
       console.log("-----------------------------------------");
       console.log(chalk.green("📌 Usage:"));
       console.log("  task-done <id>");
+      console.log(chalk.cyan("            (task's Id is required)"));
       console.log("");
       console.log(chalk.green("📝 Description:"));
       console.log("  Marks the task with the given ID as complete.");
@@ -473,6 +486,7 @@ program
       console.log("-----------------------------------------");
       console.log(chalk.green("📌 Usage:"));
       console.log("  set-reminder <message> --after <duration>");
+      console.log(chalk.cyan("               (message and duration are required)"));
       console.log("");
       console.log(chalk.green("📝 Description:"));
       console.log("  Adds a new reminder after specified time.");
@@ -607,7 +621,7 @@ program
 
 program
   .command("delete-reminder")
-  .description(chalk.redBright("Delete a reminder by its ID"))
+  .description(chalk.redBright("Delete a reminder by its Id"))
   .argument(
     "[id]",
     "ID of the reminder to delete. Use 'view-reminders' to find the ID."
@@ -620,6 +634,7 @@ program
       console.log("-----------------------------------------");
       console.log(chalk.green("📌 Usage:"));
       console.log("  delete-reminder <id>");
+      console.log(chalk.cyan("                  (reminder's Id is required)"));
       console.log("");
       console.log(chalk.green("📝 Description:"));
       console.log("  Deletes the reminder with the specified ID.");
