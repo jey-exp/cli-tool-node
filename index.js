@@ -23,12 +23,12 @@ const program = new Command();
 
 program
   .name("mycli")
-  .description("CLI tool to manage notes and tasks")
+  .description(chalk.yellowBright("CLI tool to manage notes and tasks"))
   .version("1.0.0");
 
 program
   .command("add-note")
-  .description("Adding a new note")
+  .description(chalk.green("Add a new note"))
   .argument("[title]", "Title")
   .option("-b --bullets <bullets...>", "Notes")
   .option("-t --tags <tags...>", "Tags associated with a note")
@@ -85,6 +85,7 @@ program
 
 program
   .command("ls-notes")
+  .description(chalk.green("List all notes."))
   .option("-s --sort [order]", "To sort the output", "asc")
   .option("-t --tag <tags...>", "Tags to search with")
   .option("-h --help", "Show help for ls-notes")
@@ -144,6 +145,7 @@ program
 
 program
   .command("delete-note")
+  .description(chalk.redBright("Delete a note by its ID"))
   .argument("[id]", "ID of the note, Use ls to see the ID of the note.")
   .option("-h --help", "Show help for delete-note")
   .action((id, options) => {
@@ -191,6 +193,7 @@ program
 
 program
   .command("add-task")
+  .description(chalk.green("Add a new task"))
   .argument("[title]", "Title of task")
   .option("-d --description <description...>", "Description of the task")
   .option("-h --help", "Show help for add-task")
@@ -244,6 +247,7 @@ program
 
 program
   .command("log-tasks")
+  .description(chalk.green("See history of tasks."))
   .option("-h --help", "Show help for log-tasks")
   .action((options) => {
     if (options.help) {
@@ -301,6 +305,7 @@ program
 
 program
   .command("ls-tasks")
+  .description(chalk.green("List all pending tasks."))
   .option("-h --help", "Show help or ls-tasks")
   .action((options) => {
     if (options.help) {
@@ -362,6 +367,7 @@ program
 program
   .command("delete-task")
   .argument("[id]", "Task id")
+  .description(chalk.redBright("Delete a task by its ID"))
   .option("-h --help", "Show help or ls-tasks")
   .action((id, options) => {
     if (options.help) {
@@ -408,6 +414,7 @@ program
 
 program
   .command("task-done")
+  .description(chalk.green("Mark a task as completed"))
   .argument("[id]", "Task id")
   .option("-h --help", "Show help or ls-tasks")
   .action((id, options) => {
@@ -455,7 +462,7 @@ program
 
 program
   .command("set-reminder")
-  .description("Set a reminder that notifies after given time")
+  .description(chalk.green("Set a reminder that notifies after given time"))
   .argument("[message]", "Reminder message")
   .option("--after [duration]", "When to remind (e.g., 10m, 2h, 1d)")
   .option("-h --help", "Show help for set-reminder")
@@ -524,7 +531,7 @@ program
 
 program
   .command("view-reminders")
-  .description("View all reminders")
+  .description(chalk.green("View all reminders"))
   .option("-h --help", "Show help for view-reminders")
   .action((options) => {
     if (options.help) {
@@ -600,7 +607,7 @@ program
 
 program
   .command("delete-reminder")
-  .description("Delete a reminder by its ID")
+  .description(chalk.redBright("Delete a reminder by its ID"))
   .argument(
     "[id]",
     "ID of the reminder to delete. Use 'view-reminders' to find the ID."
