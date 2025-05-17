@@ -496,8 +496,7 @@ program
       console.log("=========================================");
       return;
     }
-    
-    if(!message && !options.after) {
+    if(!message && (!options.after || options.after === true)) {
       console.error("❌ Error: message, duration is required to add a reminder");
       console.log(chalk.yellow("Use `set-reminder --help` for help."));
       process.exit(1);
@@ -507,7 +506,7 @@ program
       console.log(chalk.yellow("Use `set-reminder --help` for help."));
       process.exit(1);
     }
-    else if(!options.after){
+    else if(!options.after || options.after === true){
       console.error("❌ Error: duration is required to add a reminder");
       console.log(chalk.yellow("Use `set-reminder --help` for help."));
       process.exit(1);
