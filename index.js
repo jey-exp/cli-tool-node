@@ -34,7 +34,7 @@ program
   .option("-t --tags <tags...>", "Tags associated with a note")
   .option("-h --help", "Show help for add-note")
   .action((title, options) => {
-    if (options.help || !title) {
+    if (options.help) {
       console.log("=========================================");
       console.log(chalk.yellowBright("📝 Command: "), "add-note");
       console.log(chalk.gray("-----------------------------------------"));
@@ -57,7 +57,7 @@ program
     }
     if (!title) {
       console.error("❌ Error: Title is required to add a note.");
-      console.log(chalk.yellow("Use `add-note -h` for usage info."));
+      console.log(chalk.yellow("Use `add-note --help` for usage info."));
       process.exit(1);
     }
     const spinner = ora("Proccessing your request").start();
@@ -147,7 +147,7 @@ program
   .argument("[id]", "ID of the note, Use ls to see the ID of the note.")
   .option("-h --help", "Show help for delete-note")
   .action((id, options) => {
-    if (options.help || !id) {
+    if (options.help) {
       console.log("=========================================");
       console.log(chalk.yellowBright("🗑️ Command: "),"delete-note");
       console.log("-----------------------------------------");
@@ -165,7 +165,7 @@ program
     }
     if (!id) {
       console.error("❌ Error: Note ID is required.");
-      console.log(chalk.yellow("Use `delete-note -h` for help."));
+      console.log(chalk.yellow("Use `delete-note --help` for help."));
       process.exit(1);
     }
     const spinner = ora("Proccessing your request").start();
@@ -195,7 +195,7 @@ program
   .option("-d --description <description...>", "Description of the task")
   .option("-h --help", "Show help for add-task")
   .action((title, options) => {
-    if (options.help || !title) {
+    if (options.help) {
       console.log("=========================================");
       console.log(chalk.yellowBright("📝 Command: "),"add-task");
       console.log("-----------------------------------------");
@@ -217,7 +217,7 @@ program
     }
     if (!title) {
       console.error("❌ Error: Title is required to add a task.");
-      console.log(chalk.yellow("Use `add-task -h` for help."));
+      console.log(chalk.yellow("Use `add-task --help` for help."));
       process.exit(1);
     }
     const spinner = ora("Processing your request").start();
@@ -364,7 +364,7 @@ program
   .argument("[id]", "Task id")
   .option("-h --help", "Show help or ls-tasks")
   .action((id, options) => {
-    if (options.help || !id) {
+    if (options.help) {
       console.log("=========================================");
       console.log(chalk.yellowBright("🗑️ Command: "),"delete-task");
       console.log("-----------------------------------------");
@@ -382,7 +382,7 @@ program
     }
     if (!id) {
       console.error("❌ Error: Id is required to delete a task.");
-      console.log(chalk.yellow("Use `delete-task -h` for help."));
+      console.log(chalk.yellow("Use `delete-task --help` for help."));
       process.exit(1);
     }
     const spinner = ora("Processing the request").start();
@@ -411,7 +411,7 @@ program
   .argument("[id]", "Task id")
   .option("-h --help", "Show help or ls-tasks")
   .action((id, options) => {
-    if (options.help || !id) {
+    if (options.help) {
       console.log("=========================================");
       console.log(chalk.yellowBright("✅ Command: "),"task-done");
       console.log("-----------------------------------------");
@@ -429,7 +429,7 @@ program
     }
     if (!id) {
       console.error("❌ Error: Id is required to mark a task as completed.");
-      console.log(chalk.yellow("Use `task-done -h` for help."));
+      console.log(chalk.yellow("Use `task-done --help` for help."));
       process.exit(1);
     }
     const spinner = ora("Processing your request").start();
@@ -575,7 +575,7 @@ program
   )
   .option("-h --help", "Show help for delete-reminder")
   .action((id, options) => {
-    if (options.help || !id) {
+    if (options.help) {
       console.log("=========================================");
       console.log(chalk.yellowBright("🗑️ Command: delete-reminder"));
       console.log("-----------------------------------------");
@@ -594,7 +594,7 @@ program
 
     if (!id) {
       console.error("❌ Error: Reminder ID is required.");
-      console.log(chalk.yellow("Use `delete-reminder -h` for help."));
+      console.log(chalk.yellow("Use `delete-reminder --help` for help."));
       process.exit(1);
     }
 
