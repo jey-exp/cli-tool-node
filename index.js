@@ -127,8 +127,8 @@ program
         });
         res.map((item, index, array) => {
           console.log(chalk.gray("~~~~~~~~~~~~~~~~~~~~~~~"));
-          console.log(chalk.white("Note title :"), chalk.green(item.title));
-          console.log(chalk.white("Note's Id :"), chalk.green(item.id));
+          console.log("Note title :", chalk.green(item.title));
+          console.log("Note's Id :", chalk.green(item.id));
           if (item.bullets.length > 0) {
             console.log("Bulletins:-");
             item.bullets.map((item) => {
