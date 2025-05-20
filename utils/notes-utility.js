@@ -51,8 +51,8 @@ const list_notes = (tags, sort) => {
   var res = file_content.filter((item) => item.status === "live");
   try {
     if (file_content.length == 0) {
-      err.push({ error: "No notes to display" });
-      return { err, mess };
+      mess.push({ message: "No notes to display" });
+      return { err, mess, res };
     }
     if (tags && tags.length > 0) {
       res = res.filter(
