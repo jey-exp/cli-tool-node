@@ -123,7 +123,7 @@ program
       if (err.length == 0) {
         spinner.succeed("Request proccessed");
         mess.map((item) => {
-          console.log("--", item.message, "--");
+          console.log(chalk.yellow("--"), item.message, chalk.yellow("--"));
         });
         res.map((item, index, array) => {
           console.log(chalk.gray("~~~~~~~~~~~~~~~~~~~~~~~"));
@@ -185,7 +185,7 @@ program
         spinner.succeed("Request proccessed");
         console.log(chalk.gray("~~~~~~~~~~~~~~~~~~~~~~~"));
         mess.map((item) => {
-          console.log("--", item.message, "--");
+          console.log(chalk.yellow("--"), item.message, chalk.yellow("--"));
         });
         console.log(`Note with Id ${id} is deleted ✅`);
       } else {
@@ -285,7 +285,7 @@ program
         spinner.succeed("Request proccessed");
         console.log(chalk.gray("~~~~~~~~~~~~~~~~~~~~~~~"));
         mess.forEach((item) => {
-          console.log("--", item.message, "--");
+          console.log(chalk.yellow("--"), item.message, chalk.yellow("--"));
         });
         res.map((item, index, array) => {
           console.log("Task title :", chalk.green(item.title));
