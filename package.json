@@ -1,14 +1,14 @@
 {
-  "name": "mycli",
+  "name": "handy",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
+  "keywords": ["cli","tool","node","terminal","handy","utility"],
+  "author": "Jey",
+  "license": "MIT",
+  "description": "To make things handy, have it in your terminal!",
   "dependencies": {
     "chalk": "^4.1.2",
     "commander": "^13.1.0",
