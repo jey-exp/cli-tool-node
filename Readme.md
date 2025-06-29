@@ -12,7 +12,7 @@ A lightweight CLI tool to manage your tasks and notes — straight from the term
 ## Installation
 
 ```bash
-npm install -g <not-yet-published>
+npm install -g handy-terminal
 ```
 
 ## Commands
